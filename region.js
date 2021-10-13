@@ -120,3 +120,4 @@ exports.Region.prototype.clearBeat = function(beat){
 	// check beat is a number and within the range of beats
 	// this.rows[beat] = [];	
 }
+

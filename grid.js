@@ -18,15 +18,23 @@ exports.Grid.prototype.addRegion = function(region){
 	if(this.allowOverlap){
 		this.regions.push(region);
 	}else{
-		// todo check overlap
+		var doesOverlap = this.doesOverlap( region );
+		log( "region overlapping: " + doesOverlap );
+
+		if( doesOverlap ){
+			return false;
+		}
+	
 		this.regions.push(region);
 	}
 
-
-	var that = this;
+	var grid = this.thegrid;
 
 	region.steps.forEach( function( cell){
-		that.thegrid[ cell.x*8 + cell.y] = region;
+		grid[ (cell.y*8) + cell.x] = { 
+			region: region,
+			cell: cell
+		};
 	});
 };
 
@@ -34,7 +42,25 @@ exports.Grid.prototype.selectRegion = function(region){
 	this.selectedRegion = region;
 };
 
-exports.Grid.prototype.equals = function(){};
-exports.Grid.prototype.checkOverlap = function(){};
+
+exports.Grid.prototype.selectCell = function( cell ){
+	this.selectedCell = cell;
+};
+
+exports.Grid.prototype.doesOverlap = function(region){
+	var grid = this.thegrid;
+
+	for ( var i = 0; i < region.steps.length; i++){
+		if( grid[ region.steps[i].y*8 + region.steps[i].x] !== undefined){
+			return true;
+		}
+	}
+
+	return false;
+};
+
 exports.Grid.prototype.removeRegion = function(region){};
 
+
+//exports.Grid.prototype.toString = function(){ return "grid"; );
+//exports.Grid.prototype.equals = function(){};

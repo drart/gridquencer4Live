@@ -4,29 +4,49 @@ exports.GridSequence = function(region){
 	this.clip = undefined;
 }
 
-
 exports.GridSequence.prototype.regionToSequence = function(region, note, vel){
 	this.region = region;	
 	this.beats = region.beats;	
 
 	var clipSlot = new LiveAPI("live_set tracks 0 clip_slots 0");
 	clipSlot.call("create_clip");
-	var clip = new LiveAPI("live_set tracks 0 clip_slots 0 clip");
+
+	var clip = new LiveAPI(function(args){
+
+			// for all notes in the sequence determine if any are sounding 
+			// for all sounding notes put lights on
+			// for all non sounding notes turn lights off
 
 
-	for ( var b = 0; b < this.beats; b++){
-		var row = this.region.getRow( b );
-		var stepLength =  1 / row.length;
+			outlet(1, "setcell " + 2 + " " + 2 + " " + 1);	
+		}, 
+		"live_set tracks 0 clip_slots 0 clip"
+	);
+	clip.property = "playing_position";
 
-		for (var [i, cell] of row.entries() ){
-			// add a note that is stepLength / 2
 
-		}
-	}
+	var theNotes = clip.get("get_notes_extended", 0, 128, 0, this.region.beats);
+
+
+
+	this.clip = clip;
+	
+
 };
 
 
+function updateMatrix(){
+
+}
+
+function updatePush2Grid(){
+
+}
+
+// remove gridsequence set id 0
 
 
 
+
+/// get the ids of all notes
 

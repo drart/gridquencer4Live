@@ -4,22 +4,11 @@ outlets = 2;
 var Cell = require("cell");
 var Region = require("region");
 var Grid = require("grid");
-
+//var GridSequence = require("gridsequence");
 
 var grid = new Grid.Grid();
 
-
 var padsDown = [];
-var sequences = [];
-
- 
-
-function bang(){
-
-
-
-}
-
 
 function midievent(){
 
@@ -32,47 +21,64 @@ function midievent(){
 	}
 	
 	if (midimsg[0] === 128){// NoteOff
-		outlet(0, [144, midimsg[1], 0]);	
+		//outlet(0, [144, midimsg[1], 0]);	
 
 		if ( padsDown.length === 0 ){
 			return;
 		}
 		
 		var newRegion = createRegion( padsDown );
-		grid.addRegion( newRegion );
-		createClip( newRegion, grid );
+		var regionDidAdd = grid.addRegion( newRegion );
+	
+		if( regionDidAdd){
+			log('hooray');
+		}else{
+			log('whoopsie');
+		}
 
-		//updateMatrixVisuals(grid.thegrid);
-		//updatePushController(grid.thegrid);
+		var clip = createClip( newRegion, grid );
+		//addNotesToGrid( clip, grid ); 
+		clip.call("fire");
+
+		updateMatrixVisuals(grid.thegrid);
+		updatePushController(grid.thegrid);
 
 		padsDown = [];
-
 	}	
 }
 
-
+/// todo fix this for better set management
 function createClip(newRegion, grid){
 
 	var path = "live_set tracks 0 clip_slots " + (grid.regions.length - 1);
 	var clippath = path + " clip";
-	var clipSlot = new LiveAPI( path ); /// check to see track has right number of clip_slots create new scene? 
-	if( clipSlot.get("has_clip")   === true){
+	var clipSlot = new LiveAPI( path ); /// todo check to see track has right number of clip_slots create new scene? 
+	
+	var hasclip = clipSlot.get("has_clip");
+	if( hasclip == 1){
 		log('slot has a clip');
 		clipSlot.call("delete_clip");
 	}else{
 		log('clip does not have a slot');
 	}
-	clipSlot.call("create_clip", 5);
-	var clip = new LiveAPI(clippath);
 	
-	
-	
-	/// add notes to clip
 	var newnotes = newRegion.toNotes();
-	log( newnotes );
+	//log( newnotes );
 
+	clipSlot.call("create_clip", newRegion.beats);
+	var clip = new LiveAPI(clippath);
 	clip.call("add_new_notes", newnotes );
+
+	return clip;
 }
+
+
+function addNotesToGrid( clip, grid ){
+	// map notes to grid? 	
+	// get the notes and their ids? 
+	log( clip.call("get_notes_extended", 0, 128, 0, newRegion.beats ) );
+}
+
 
 function addCell( midimsg ){
 			var newCell = new Cell.Cell();
@@ -90,18 +96,23 @@ function createRegion( padsdown ){
 }
 
 
-/// should reflect the grid? 
 function updateMatrixVisuals(cells){
 	
 	cells.forEach(function(cell){
-		outlet(1, "setcell", cell.x + 1, cell.y + 1, 0 );
+		if( cell ) {
+			outlet(1, "setcell", cell.cell.x + 1, cell.cell.y + 1, 1 );
+		}
 	});
 }
 
 function updatePushController(cells){
 
 	cells.forEach(function(cell){
-		outlet(0, [144, 60, 1]);
+		if ( cell ) {
+
+			var notenumber = (cell.cell.y * 8 ) + cell.cell.x + 36 ;
+			outlet(0, [144, notenumber, 1]);
+		} 
 	});
 }
 
