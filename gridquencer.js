@@ -7,7 +7,7 @@ var Grid = require("grid");
 //var GridSequence = require("gridsequence");
 
 var grid = new Grid.Grid();
-
+clearPushGrid();
 var padsDown = [];
 
 function midievent(){
@@ -28,29 +28,28 @@ function midievent(){
 		}
 		
 		var newRegion = createRegion( padsDown );
-		var regionDidAdd = grid.addRegion( newRegion );
+		var resultingRegion = grid.addRegion( newRegion );
 	
-		if( regionDidAdd){
-			log('hooray');
+		if( resultingRegion ){
+			//log('hooray');
+			var clip = createClip( resultingRegion, grid.regions.length-1 );
+			clip.call("fire");
+
+			updateMatrixVisuals(grid.thegrid);
+			updatePushController(grid.thegrid);
+
 		}else{
 			log('whoopsie');
 		}
-
-		var clip = createClip( newRegion, grid );
-		//addNotesToGrid( clip, grid ); 
-		clip.call("fire");
-
-		updateMatrixVisuals(grid.thegrid);
-		updatePushController(grid.thegrid);
 
 		padsDown = [];
 	}	
 }
 
 /// todo fix this for better set management
-function createClip(newRegion, grid){
+function createClip(newRegion, trackSlot){
 
-	var path = "live_set tracks 0 clip_slots " + (grid.regions.length - 1);
+	var path = "live_set tracks 0 clip_slots " + trackSlot;
 	var clippath = path + " clip";
 	var clipSlot = new LiveAPI( path ); /// todo check to see track has right number of clip_slots create new scene? 
 	
@@ -67,18 +66,11 @@ function createClip(newRegion, grid){
 
 	clipSlot.call("create_clip", newRegion.beats);
 	var clip = new LiveAPI(clippath);
-	clip.call("add_new_notes", newnotes );
+	clip.call("add_new_notes", newnotes);
+	clip.set("loop_end", newRegion.beats)
 
 	return clip;
 }
-
-
-function addNotesToGrid( clip, grid ){
-	// map notes to grid? 	
-	// get the notes and their ids? 
-	log( clip.call("get_notes_extended", 0, 128, 0, newRegion.beats ) );
-}
-
 
 function addCell( midimsg ){
 			var newCell = new Cell.Cell();
@@ -102,17 +94,24 @@ function updateMatrixVisuals(cells){
 		if( cell ) {
 			outlet(1, "setcell", cell.cell.x + 1, cell.cell.y + 1, 1 );
 		}
+
+		//else{
+		//	outlet(1, "setcell", cell.cell.x + 1, cell.cell.y + 1, 0 );
+		//}
 	});
 }
 
 function updatePushController(cells){
 
 	cells.forEach(function(cell){
+		
 		if ( cell ) {
-
 			var notenumber = (cell.cell.y * 8 ) + cell.cell.x + 36 ;
 			outlet(0, [144, notenumber, 1]);
 		} 
+		//else{
+		//	outlet(0, [144, notenumber, 0]);
+		//}
 	});
 }
 
@@ -124,7 +123,12 @@ function removeSequence(){
 
 }
 
+function clearPushGrid(){
 
+	for (var i = 0; i < 8 * 8; i++){
+		outlet(0, [144, i + 36, 0]);
+	}
+}
 
 function log() {
   for(var i=0,len=arguments.length; i<len; i++) {

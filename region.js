@@ -19,7 +19,6 @@ exports.Region = function(){
 // adjust row
 
 exports.Region.prototype.addCells = function(cells){
-	// must be either a cell or an array of cells. check it? 
 	if (cells.length === 0 ){return;}
 
 	if( cells.length === 1){
@@ -27,11 +26,11 @@ exports.Region.prototype.addCells = function(cells){
 		this.endpoint = cells[0];
 		this.beats = 1;
 		this.steps = cells;
+		this.rows[0] = cells;
 		return;
 	}
 
 	if (cells.length === 2){
-		log('2 down parsing');
 		this.startPoint = cells[0];
 		this.endPoint = cells[1];
 
@@ -50,6 +49,7 @@ exports.Region.prototype.addCells = function(cells){
 		}else{
 			log('yet to be implemented');
 		}
+
 		this.beats = 0;
 
 		for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
@@ -60,7 +60,7 @@ exports.Region.prototype.addCells = function(cells){
 				this.steps.push( newCell );
 				this.rows[this.beats].push(newCell);
 
-				log( newCell );
+				//log( newCell );
 			}
 			this.beats++;
 		}
@@ -91,13 +91,11 @@ exports.Region.prototype.toNotes = function(){
 	var newnotes = {};
 	newnotes.notes = [];
 
-
-	log( this.rows.length );
-
+	//log( this.rows.length );
 	
-	for ( var i = 0; i < this.rows.length; i++){
+	for (var i = 0; i < this.rows.length; i++){
 		for (var j = 0; j < this.rows[i].length; j++){
-			log(this.rows[i].length);
+			//log( this.rows[i].length );
 			newnotes.notes.push({
 				pitch: 60 + i + j, 
 				start_time: (j / this.rows[i].length ) + i,
@@ -109,11 +107,15 @@ exports.Region.prototype.toNotes = function(){
 	return newnotes;
 }
 
-exports.Region.prototype.reviseRow = function(beat, row){
-	// get the row 
-	// replace the row array with new row? 
-	// if beat is a number
-	// if row is an array? 
+exports.Region.prototype.replaceRow = function(beat, row){
+
+	log("replace row with: ");
+	if( Array.isArray(row) ){
+		row.forEach(function(cell){log(cell)});
+		this.rows[beat] = row;
+	}else{
+		log('error adding notes to region');
+	}
 }
 
 exports.Region.prototype.clearBeat = function(beat){
@@ -121,3 +123,52 @@ exports.Region.prototype.clearBeat = function(beat){
 	// this.rows[beat] = [];	
 }
 
+exports.Region.prototype.onBeat = function( cell ){
+	if( this.steps[0].x === cell.x ){
+		return true; 
+	}else{
+		return false;
+	}
+};
+
+exports.Region.prototype.mergeRegion = function( region ){
+	log("adding region with this many rows: " +  region.rows.length );
+
+	var startingPoint; 
+
+	for( var i = 0; i < this.rows.length; i++){
+		if(   this.rows[i][0].equals( region.steps[0] )){
+			startingPoint = i;
+			break;
+		}
+	}
+
+	for( var i = 0; i < region.rows.length; i++){
+		this.replaceRow( startingPoint + i, region.rows[i] );	
+	}
+
+
+	this.rebuildRegion();
+};
+
+
+exports.Region.prototype.rebuildRegion = function(){
+
+	/*
+	this.bottomLeft = this.rows[0][0];	
+	this.bottomRight = this.rows[0][this.rows[0].length-1];
+	this.topLeft = this.rows[this.rows.length-1][0];
+	this.topRight = this.rows[this.rows.length-1][this.rows[this.rows.length-1].length-1];
+	*/
+	this.beats = this.rows.length;
+
+	beat = 0;
+
+	this.steps = [];
+
+	for( var i = 0; i < this.rows.length; i++){
+		for ( var j = 0; j < this.rows[i].length; j++){
+			this.steps.push( this.rows[i,j] );
+		}
+	}
+};
