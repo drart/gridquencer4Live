@@ -34,8 +34,8 @@ exports.Region.prototype.addCells = function(cells){
 		this.startPoint = cells[0];
 		this.endPoint = cells[1];
 
-		log("startpoint: " + this.startPoint.x + "," + this.startPoint.y );
-		log("endpoint: " + this.endPoint.x + " " + this.endPoint.y);
+		//log("startpoint: " + this.startPoint.x + "," + this.startPoint.y );
+		//log("endpoint: " + this.endPoint.x + " " + this.endPoint.y);
 
 		if( this.startPoint.x <= this.endPoint.x){
 			if( this.startPoint.y <= this.endPoint.y ){
@@ -60,7 +60,7 @@ exports.Region.prototype.addCells = function(cells){
 				this.steps.push( newCell );
 				this.rows[this.beats].push(newCell);
 
-				//log( newCell );
+				log( newCell );
 			}
 			this.beats++;
 		}
@@ -71,6 +71,22 @@ exports.Region.prototype.addCells = function(cells){
 		log(' bigger shapes not yet implemented' );
 	}
 };
+
+exports.Region.prototype.toNotes = function(){
+	var newnotes = {};
+	newnotes.notes = [];
+	
+	for (var i = 0; i < this.rows.length; i++){
+		for (var j = 0; j < this.rows[i].length; j++){
+			newnotes.notes.push({
+				pitch: 60 + i + j, 
+				start_time: (j / this.rows[i].length ) + i,
+				duration: 0.5 / this.rows[i].length		
+			});
+		}
+	}
+	return newnotes;
+}
 
 exports.Region.prototype.getRow = function(rowNumber){
 	if( rowNumber > this.beats){return undefined}
@@ -86,26 +102,6 @@ exports.Region.prototype.getRow = function(rowNumber){
 
 	return theRow;
 };
-
-exports.Region.prototype.toNotes = function(){
-	var newnotes = {};
-	newnotes.notes = [];
-
-	//log( this.rows.length );
-	
-	for (var i = 0; i < this.rows.length; i++){
-		for (var j = 0; j < this.rows[i].length; j++){
-			//log( this.rows[i].length );
-			newnotes.notes.push({
-				pitch: 60 + i + j, 
-				start_time: (j / this.rows[i].length ) + i,
-				duration: 0.5 / this.rows[i].length		
-			});
-		}
-	}
-
-	return newnotes;
-}
 
 exports.Region.prototype.replaceRow = function(beat, row){
 
@@ -147,7 +143,6 @@ exports.Region.prototype.mergeRegion = function( region ){
 		this.replaceRow( startingPoint + i, region.rows[i] );	
 	}
 
-
 	this.rebuildRegion();
 };
 
@@ -161,14 +156,17 @@ exports.Region.prototype.rebuildRegion = function(){
 	this.topRight = this.rows[this.rows.length-1][this.rows[this.rows.length-1].length-1];
 	*/
 	this.beats = this.rows.length;
+	
+	//log( this.steps );
+	this.steps =  [].concat.apply([], this.rows) ;
 
-	beat = 0;
-
+	/*
 	this.steps = [];
-
 	for( var i = 0; i < this.rows.length; i++){
 		for ( var j = 0; j < this.rows[i].length; j++){
 			this.steps.push( this.rows[i,j] );
 		}
 	}
+	*/
+	log('rebuilt steps. length: ' + this.steps.length );
 };

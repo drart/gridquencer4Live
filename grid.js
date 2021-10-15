@@ -1,4 +1,3 @@
-
 exports.Grid = function(){
 
 	this.rows = 8;
@@ -8,13 +7,26 @@ exports.Grid = function(){
 	this.selectedCell = null;
 	this.selectedRegion = null;
 	this.allowOverlap = false;
-	
-	for (var i = 0; i < this.rows * this.columns; i++){
-		this.thegrid[i] = undefined;
-	}
+
+	//for (var i = 0; i < this.rows * this.columns; i++){
+	//		this.thegrid[i] = undefined;
+	//}
 }
+/*
+exports.Grid.prototype.printUnemptyCells = function(){
+
+	var unemptycells = 0;
+	this.thegrid.forEach(function(cell){
+		if( cell ){unemptycells++}	
+	});
+	post("unempty cells in grid: " + unemptycells );
+
+};
+*/
 
 exports.Grid.prototype.addRegion = function(region){
+	// todo make sure it is within bounds?  //this.printUnemptyCells();
+
 	if(this.allowOverlap){
 		this.regions.push(region);
 	}else{
@@ -22,24 +34,20 @@ exports.Grid.prototype.addRegion = function(region){
 		log( "region overlapping: " + doesOverlap );
 
 		// todo check to see that it doesn't overlap with more than one region? 
+		// move this to the 
 
 		if( doesOverlap ){
 			// rename to overlapping cell? 
 			var overlappingRegion = this.thegrid[ region.steps[0].y*8 + region.steps[0].x ]; 
 	
 			if( overlappingRegion !== undefined ){
-				if( overlappingRegion.region.onBeat( region.steps[0] ) ){
-					//overlappingRegion.region.steps.forEach(function(cell){
-							//log(cell);
-					//});
+				if( overlappingRegion.region.onBeat( region.steps[0] ) ){ // adjust a beat
 
-					//log('number of cells before: ' + overlappingRegion.region.steps.length );
 					overlappingRegion.region.mergeRegion( region );
 					region = overlappingRegion.region;
 
 					//log('number of cells after: ' + overlappingRegion.region.steps.length );
 					//log('number of steps in region: ' + region.steps.length );
-
 				}else{
 					return undefined;
 				}
@@ -49,54 +57,18 @@ exports.Grid.prototype.addRegion = function(region){
 		}
 	}
 
-	/*
-	var grid = this.thegrid;
 
-	region.steps.forEach( function(cell){
-		grid[ (cell.y*8) + cell.x] = { 
-			region: region,
-			cell: cell
-		};
-	});
-	*/
 
-	this.rebuildGrid();
+	//var grid = this.thegrid;
+
+       region.steps.forEach( function(cell){
+               this.thegrid[ (cell.y*8) + cell.x] = { 
+                       region: region,
+                       cell: cell
+               };
+       }, this);
 
 	return region;
-};
-
-
-/*
-exports.Grid.prototype.mergeRegion = function(region, newRegion){
-
-	/// if new region has more cells then add to grid
-	/// if new region has less cells then figure out the difference and remove those cells from the grid? 
-
-};
-*/
-
-
-exports.Grid.prototype.rebuildGrid = function(){
-	var grid = this.thegrid;
-	//log("regions: " + this.regions.length );
-
-	this.regions.forEach( function(region){
-		region.steps.forEach( function(cell){
-			//log( cell );
-			grid[cell.y*8 + cell.x] = {
-				region: region,
-				cell: cell
-			}
-		});
-	});
-
-
-	var unemptycells = 0;
-	this.thegrid.forEach(function(cell){
-		if( cell ){unemptycells++}	
-	});
-	post("unempty cells in grid: " + unemptycells );
-	
 };
 
 exports.Grid.prototype.selectRegion = function(region){
@@ -109,6 +81,7 @@ exports.Grid.prototype.selectCell = function( cell ){
 };
 
 exports.Grid.prototype.doesOverlap = function(region){
+
 	var grid = this.thegrid;
 
 	for ( var i = 0; i < region.steps.length; i++){
@@ -116,22 +89,35 @@ exports.Grid.prototype.doesOverlap = function(region){
 			return true;
 		}
 	}
-
 	return false;
 };
 
-
-exports.Grid.prototype.overlappingRegions = function( region ){
+exports.Grid.prototype.overlappingRegions = function( newRegion ){
 	var overlappingRegions = [];
 	
 	// if found a region check to see it doesn't already exist in the array
+	this.regions.forEach(function(region){
+		region.rows.forEach(function(row){
+			row.forEach(function(cell){
+				// if overlap overlappingRegions.push(region)					
+			});
+		});
+	});	
 
 	return overlappingRegions;
 };
 
+exports.Grid.prototype.removeRegion = function(region){
+	// remove all indices from the grid
+	// remove region from this.regions 
+};
 
-exports.Grid.prototype.removeRegion = function(region){};
+exports.Grid.prototype.testTwoObjects = function( object1, object2 ){
 
+	//return( Object.keys(object1).every(function(key){ return object1[key] === object2[key]; });
+	//return Object.keys(object1).every((key) =>  object1[key] === object2[key]);
+
+	return JSON.stringify(object1) === JSON.stringify(object2);
+}
 
 //exports.Grid.prototype.toString = function(){ return "grid"; );
-//exports.Grid.prototype.equals = function(){};

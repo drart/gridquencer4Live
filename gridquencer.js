@@ -7,8 +7,13 @@ var Grid = require("grid");
 //var GridSequence = require("gridsequence");
 
 var grid = new Grid.Grid();
-clearPushGrid();
+
 var padsDown = [];
+
+function bang(){
+	clearPushGrid();
+	outlet(1, "clear");
+}
 
 function midievent(){
 
@@ -35,8 +40,8 @@ function midievent(){
 			var clip = createClip( resultingRegion, grid.regions.length-1 );
 			clip.call("fire");
 
-			updateMatrixVisuals(grid.thegrid);
-			updatePushController(grid.thegrid);
+			updateMatrixVisuals();
+			updatePushController();
 
 		}else{
 			log('whoopsie');
@@ -62,7 +67,7 @@ function createClip(newRegion, trackSlot){
 	}
 	
 	var newnotes = newRegion.toNotes();
-	//log( newnotes );
+	log( newnotes );
 
 	clipSlot.call("create_clip", newRegion.beats);
 	var clip = new LiveAPI(clippath);
@@ -88,39 +93,29 @@ function createRegion( padsdown ){
 }
 
 
-function updateMatrixVisuals(cells){
+function updateMatrixVisuals(){
 	
-	cells.forEach(function(cell){
-		if( cell ) {
-			outlet(1, "setcell", cell.cell.x + 1, cell.cell.y + 1, 1 );
-		}
-
-		//else{
-		//	outlet(1, "setcell", cell.cell.x + 1, cell.cell.y + 1, 0 );
-		//}
+	outlet(1, 'clear');
+	grid.regions.forEach(function(region){
+		region.rows.forEach(function(row){
+			row.forEach(function(cell){
+				outlet(1, "setcell", cell.x +1, cell.y+1, 1);
+			});
+		});
 	});
 }
 
-function updatePushController(cells){
-
-	cells.forEach(function(cell){
-		
-		if ( cell ) {
-			var notenumber = (cell.cell.y * 8 ) + cell.cell.x + 36 ;
-			outlet(0, [144, notenumber, 1]);
-		} 
-		//else{
-		//	outlet(0, [144, notenumber, 0]);
-		//}
+function updatePushController(){
+	clearPushGrid();
+	
+	grid.regions.forEach(function(region){
+		region.rows.forEach(function(row){
+			row.forEach(function(cell){
+				outlet(0, [144, cell.y*8 + cell.x + 36, 1]);
+			});
+		});
 	});
-}
-
-
-function removeSequence(){
-
-	/// identify sequence
-	/// set id to 0
-
+	
 }
 
 function clearPushGrid(){
