@@ -36,17 +36,15 @@ function midievent(){
 		var resultingRegion = grid.addRegion( newRegion );
 	
 		if( resultingRegion ){
-			//log('hooray');
 			var clip = createClip( resultingRegion, grid.regions.length-1 );
-			clip.call("fire");
-
-			updateMatrixVisuals();
-			updatePushController();
-
+			//clip.call("fire");
 		}else{
 			log('whoopsie');
 		}
-
+		
+		
+		updateMatrixVisuals();
+		updatePushController();
 		padsDown = [];
 	}	
 }
@@ -67,7 +65,7 @@ function createClip(newRegion, trackSlot){
 	}
 	
 	var newnotes = newRegion.toNotes();
-	log( newnotes );
+	//log( newnotes );
 
 	clipSlot.call("create_clip", newRegion.beats);
 	var clip = new LiveAPI(clippath);
@@ -108,10 +106,10 @@ function updateMatrixVisuals(){
 function updatePushController(){
 	clearPushGrid();
 	
-	grid.regions.forEach(function(region){
+	grid.regions.forEach(function(region, regionIndex){
 		region.rows.forEach(function(row){
 			row.forEach(function(cell){
-				outlet(0, [144, cell.y*8 + cell.x + 36, 1]);
+				outlet(0, [144, cell.y*8 + cell.x + 36, regionIndex+1]);
 			});
 		});
 	});

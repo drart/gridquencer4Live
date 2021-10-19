@@ -12,7 +12,7 @@ exports.Grid = function(){
 	//		this.thegrid[i] = undefined;
 	//}
 }
-/*
+
 exports.Grid.prototype.printUnemptyCells = function(){
 
 	var unemptycells = 0;
@@ -22,7 +22,6 @@ exports.Grid.prototype.printUnemptyCells = function(){
 	post("unempty cells in grid: " + unemptycells );
 
 };
-*/
 
 exports.Grid.prototype.addRegion = function(region){
 	// todo make sure it is within bounds?  //this.printUnemptyCells();
@@ -34,7 +33,6 @@ exports.Grid.prototype.addRegion = function(region){
 		log( "region overlapping: " + doesOverlap );
 
 		// todo check to see that it doesn't overlap with more than one region? 
-		// move this to the 
 
 		if( doesOverlap ){
 			// rename to overlapping cell? 
@@ -42,12 +40,20 @@ exports.Grid.prototype.addRegion = function(region){
 	
 			if( overlappingRegion !== undefined ){
 				if( overlappingRegion.region.onBeat( region.steps[0] ) ){ // adjust a beat
+					
+					log('before removal');
+					this.printUnemptyCells();
+					
+					region.steps.forEach( function(cell){
+						this.thegrid[cell.y*8 + cell.x]  = undefined;	
+					},this);
+					
+					log('after removal');
+					this.printUnemptyCells();
 
 					overlappingRegion.region.mergeRegion( region );
 					region = overlappingRegion.region;
 
-					//log('number of cells after: ' + overlappingRegion.region.steps.length );
-					//log('number of steps in region: ' + region.steps.length );
 				}else{
 					return undefined;
 				}
@@ -58,15 +64,15 @@ exports.Grid.prototype.addRegion = function(region){
 	}
 
 
-
-	//var grid = this.thegrid;
-
+	// todo: what if region exists? this will create weird behaviours
        region.steps.forEach( function(cell){
                this.thegrid[ (cell.y*8) + cell.x] = { 
                        region: region,
                        cell: cell
                };
        }, this);
+
+	this.printUnemptyCells();
 
 	return region;
 };
@@ -75,6 +81,10 @@ exports.Grid.prototype.selectRegion = function(region){
 	this.selectedRegion = region;
 };
 
+
+exports.Grid.prototype.moveRegion = function(region,newOrigin){
+
+};
 
 exports.Grid.prototype.selectCell = function( cell ){
 	this.selectedCell = cell;
@@ -107,16 +117,47 @@ exports.Grid.prototype.overlappingRegions = function( newRegion ){
 	return overlappingRegions;
 };
 
+exports.Grid.prototype.modifyRegion = function(region){
+
+	// determine the mod
+	// modify just those bits of the grid? 
+
+	
+};
+
 exports.Grid.prototype.removeRegion = function(region){
-	// remove all indices from the grid
-	// remove region from this.regions 
+
+	region.steps.forEach(function(cell){
+		this.thegrid[cell.y*8 + cell.x] = undefined;	
+	}, this);
+	
+
+	var regionIndex = this.regions.findIndex( function( region ){
+		return JSON.stringify( this.regions[i] ) == JSON.stringify( region );
+	});
+
+	log("find region index via array.findIndex: " +  regionIndex );
+
+	var regionLocation; 
+	for( var i = 0; i < this.regions.length; i++){
+		if( JSON.stringify( this.regions[i] ) == JSON.stringify( region ) ){
+			regionLocation = i;
+			break;
+		}	
+	}
+
+	if( regionLocation !== -1){
+		this.regions.splice( regionLocation, 1 );
+	}
 };
 
 exports.Grid.prototype.testTwoObjects = function( object1, object2 ){
 
+	// this would be better
 	//return( Object.keys(object1).every(function(key){ return object1[key] === object2[key]; });
 	//return Object.keys(object1).every((key) =>  object1[key] === object2[key]);
 
+	// works
 	return JSON.stringify(object1) === JSON.stringify(object2);
 }
 

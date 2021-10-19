@@ -105,7 +105,7 @@ exports.Region.prototype.getRow = function(rowNumber){
 
 exports.Region.prototype.replaceRow = function(beat, row){
 
-	log("replace row with: ");
+	//log("replace row with: ");
 	if( Array.isArray(row) ){
 		row.forEach(function(cell){log(cell)});
 		this.rows[beat] = row;
@@ -116,7 +116,7 @@ exports.Region.prototype.replaceRow = function(beat, row){
 
 exports.Region.prototype.clearBeat = function(beat){
 	// check beat is a number and within the range of beats
-	// this.rows[beat] = [];	
+	this.rows[beat] = [];	
 }
 
 exports.Region.prototype.onBeat = function( cell ){
@@ -128,10 +128,10 @@ exports.Region.prototype.onBeat = function( cell ){
 };
 
 exports.Region.prototype.mergeRegion = function( region ){
+	
 	log("adding region with this many rows: " +  region.rows.length );
 
 	var startingPoint; 
-
 	for( var i = 0; i < this.rows.length; i++){
 		if(   this.rows[i][0].equals( region.steps[0] )){
 			startingPoint = i;
@@ -146,7 +146,6 @@ exports.Region.prototype.mergeRegion = function( region ){
 	this.rebuildRegion();
 };
 
-
 exports.Region.prototype.rebuildRegion = function(){
 
 	/*
@@ -155,6 +154,7 @@ exports.Region.prototype.rebuildRegion = function(){
 	this.topLeft = this.rows[this.rows.length-1][0];
 	this.topRight = this.rows[this.rows.length-1][this.rows[this.rows.length-1].length-1];
 	*/
+
 	this.beats = this.rows.length;
 	
 	//log( this.steps );
@@ -168,5 +168,6 @@ exports.Region.prototype.rebuildRegion = function(){
 		}
 	}
 	*/
+
 	log('rebuilt steps. length: ' + this.steps.length );
 };
