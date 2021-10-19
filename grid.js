@@ -35,24 +35,17 @@ exports.Grid.prototype.addRegion = function(region){
 		// todo check to see that it doesn't overlap with more than one region? 
 
 		if( doesOverlap ){
-			// rename to overlapping cell? 
-			var overlappingRegion = this.thegrid[ region.steps[0].y*8 + region.steps[0].x ]; 
+			var overlappingRegion = this.thegrid[ region.steps[0].y*8 + region.steps[0].x ].region; 
 	
 			if( overlappingRegion !== undefined ){
-				if( overlappingRegion.region.onBeat( region.steps[0] ) ){ // adjust a beat
+				if( overlappingRegion.onBeat( region.steps[0] ) ){ // adjust a beat
 					
-					log('before removal');
-					this.printUnemptyCells();
-					
-					region.steps.forEach( function(cell){
+					overlappingRegion.steps.forEach( function(cell){
 						this.thegrid[cell.y*8 + cell.x]  = undefined;	
 					},this);
 					
-					log('after removal');
-					this.printUnemptyCells();
-
-					overlappingRegion.region.mergeRegion( region );
-					region = overlappingRegion.region;
+					overlappingRegion.mergeRegion( region );
+					region = overlappingRegion;
 
 				}else{
 					return undefined;
@@ -63,8 +56,7 @@ exports.Grid.prototype.addRegion = function(region){
 		}
 	}
 
-
-	// todo: what if region exists? this will create weird behaviours
+	// todo: what if region exists? this will create weird behaviours?
        region.steps.forEach( function(cell){
                this.thegrid[ (cell.y*8) + cell.x] = { 
                        region: region,

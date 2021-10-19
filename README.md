@@ -15,9 +15,6 @@ TODO
   - create a heuristics to apply to note generation
 
 
-
 BUGS
-  - modifying a region adds a new clip (return deleted cells and added cells)
-  - grid.thegrid needs to be updated when a region is modified
+  - modifying a clip should check for overlap
   - what if a region overlaps multipe regions?
-
