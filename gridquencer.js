@@ -4,16 +4,78 @@ outlets = 2;
 var Cell = require("cell");
 var Region = require("region");
 var Grid = require("grid");
-//var GridSequence = require("gridsequence");
 
 var grid = new Grid.Grid();
-
 var padsDown = [];
+var thisTrackID, selectedTrackID;
+var myPush2;
+var ButtonMatrix;
 
-function bang(){
-	clearPushGrid();
-	outlet(1, "clear");
+function setup(){
+	var liveApp = new LiveAPI(null, 'live_app');	
+	var controlSurfaces = liveApp.getcount('control_surfaces');
+
+	for (var i = 0; i < controlSurfaces; i++){
+		var controlSurface = new LiveAPI(null, "control_surfaces " + i );
+		if ( controlSurface.type == "Push2" ){
+			myPush2 = controlSurface;
+			log('Found a Push2');	
+
+			ButtonMatrix = new LiveAPI( buttonMatrixListener, "control_surfaces " + i + " controls 200" );
+			ButtonMatrix.property = "value";
+		
+			break;
+		}
+	}
+
+	var thisTrack = new LiveAPI( function(args){
+		thisTrackID = Number( args[1] );
+	});
+	thisTrack.path = "this_device canonical_parent";
+	thisTrack.mode = 1;	
+
+	var selectedTrack = new LiveAPI( function(args){
+		selectedTrackID = Number( args[1] );
+
+		if( trackId === selectedTrackID ){ /// seems to be off by 1? 
+			log('this track');
+		}else{
+			log('not this track');
+		}
+	});
+	selectedTrack.path = "live_set view selected_track";
+	selectedTrack.mode = 1;
+
+
+	outlet(1, 'clear');
 }
+
+
+
+function buttonMatrixListener( args ){
+	log( args ); // "value", velocity, x, y, 1
+	
+	if( args.length === 5){
+		if( args[1] > 0 ){
+			outlet(1, "setcell", args[2] +1, 8-args[3], 1);
+			ButtonMatrix.call('send_value', args[2], args[3], 122 );
+		}else{
+			outlet(1, "setcell", args[2] +1, 8-args[3], 0);
+			ButtonMatrix.call('send_value', args[2], args[3], 0 );
+		}
+	}
+	
+}
+
+function grabButtonMatrix(){
+	myPush2.call('grab_control', 'Button_Matrix');
+}
+
+
+function releaseButtonMatrix(){
+	myPush2.call('release_control', 'Button_Matrix');
+}
+
 
 function midievent(){
 
@@ -76,10 +138,10 @@ function createClip(newRegion, trackSlot){
 }
 
 function addCell( midimsg ){
-			var newCell = new Cell.Cell();
-			newCell.fromMIDINote( midimsg );
-		
-			padsDown.push( newCell );
+	var newCell = new Cell.Cell();
+	newCell.fromMIDINote( midimsg );
+
+	padsDown.push( newCell );
 }
 
 function createRegion( padsdown ){
@@ -117,12 +179,13 @@ function updatePushController(){
 }
 
 function clearPushGrid(){
-
 	for (var i = 0; i < 8 * 8; i++){
 		outlet(0, [144, i + 36, 0]);
 	}
 }
 
+
+/// cite this gem properly
 function log() {
   for(var i=0,len=arguments.length; i<len; i++) {
     var message = arguments[i];
@@ -142,28 +205,3 @@ function log() {
   }
   post("\n");
 }
-
-
-
-/*
-
-//Proof of concept for
-		duh = new LiveAPI(function(args){
-				//post(args[1].toString());
-				var clippos = args[1];
-
-				if ( clippos < 2.5 ){
-					outlet(1, "setcell", 8, 8, 1 );
-				}else{
-					outlet(1, "setcell", 8, 8, 0 );
-				}
-
-			}, 
-			"live_set tracks 0 clip_slots 0 clip"
-		);
-		duh.property = "playing_position";
-		//duh.call("fire");
-		
-		
-		
-		*/
