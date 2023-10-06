@@ -12,6 +12,7 @@ Put the device onto a track. When that track is selected the device will take ov
 
 
 TODO
+  - create a heuristics to apply to note generation
   - use controlSurface API for connecting to Push instead of MIDI messages
   - adjust lights when sequence plays
   - load sequences from a track? 
@@ -20,7 +21,6 @@ TODO
   - colours: active beat, inactive beat
   - move regions? 
   - adjust a note
-  - create a heuristics to apply to note generation
 
 BUGS
   - modifying a clip should check for overlap
