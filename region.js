@@ -22,6 +22,7 @@ exports.Region.prototype.addCells = function(cells){
 	if (cells.length === 0 ){return;}
 
 	if( cells.length === 1){
+        post("single cell region\n");
 		this.startpoint = cells[0];
 		this.endpoint = cells[0];
 		this.beats = 1;
@@ -31,6 +32,7 @@ exports.Region.prototype.addCells = function(cells){
 	}
 
 	if (cells.length === 2){
+        post("two cell region\n");
 		this.startPoint = cells[0];
 		this.endPoint = cells[1];
 
@@ -47,7 +49,7 @@ exports.Region.prototype.addCells = function(cells){
 				this.topLeft = this.startPoint;
 			}
 		}else{
-			log('yet to be implemented');
+			post('yet to be implemented');
 		}
 
 		this.beats = 0;
@@ -60,7 +62,10 @@ exports.Region.prototype.addCells = function(cells){
 				this.steps.push( newCell );
 				this.rows[this.beats].push(newCell);
 
-				log( newCell );
+				post( newCell.x );
+                post(",");
+				post( newCell.y );
+                post("\n");
 			}
 			this.beats++;
 		}
@@ -68,7 +73,7 @@ exports.Region.prototype.addCells = function(cells){
 	}
 
 	if( cells.legnth > 2 ){
-		log(' bigger shapes not yet implemented' );
+		post(' bigger shapes not yet implemented' );
 	}
 };
 
@@ -110,8 +115,18 @@ exports.Region.prototype.replaceRow = function(beat, row){
 		row.forEach(function(cell){log(cell)});
 		this.rows[beat] = row;
 	}else{
-		log('error adding notes to region');
+		post('error adding notes to region');
 	}
+}
+
+exports.Region.prototype.toList = function(){
+    var regionlist = [];
+    //post(this.rows.length);
+    //post(this.rows[0].length);
+    for(var i = 0; i < this.rows.length; i++){
+        regionlist[i] = this.rows[i].length;
+    }
+    return regionlist;
 }
 
 exports.Region.prototype.clearBeat = function(beat){
@@ -129,7 +144,7 @@ exports.Region.prototype.onBeat = function( cell ){
 
 exports.Region.prototype.mergeRegion = function( region ){
 	
-	log("adding region with this many rows: " +  region.rows.length );
+	//log("adding region with this many rows: " +  region.rows.length );
 
 	var startingPoint; 
 	for( var i = 0; i < this.rows.length; i++){
@@ -169,5 +184,5 @@ exports.Region.prototype.rebuildRegion = function(){
 	}
 	*/
 
-	log('rebuilt steps. length: ' + this.steps.length );
+	//log('rebuilt steps. length: ' + this.steps.length );
 };
