@@ -1,4 +1,11 @@
-function pushNoteToCellPosition(note){
+
+
+function pushNoteToCellPosition(note, velo){
+	if(velo == 0 ){
+		outlet(0, "reset");
+		return;
+	}
+	
 	var position = [1,1];
 	position[0] = (note - 36) % 8 ;
 	position[1] = Math.floor(( note - 36) / 8);
@@ -10,11 +17,3 @@ function pushNoteToCellPosition(note){
 	outlet(0, position);
 }
 
-function midiInput(){
-	var a = arrayfromarguments();
-	if(a[1] == 0){ // note off
-		outlet(0, 'clear');
-	}else{
-		pushNoteToCellPosition(a[0]);
-	}
-}

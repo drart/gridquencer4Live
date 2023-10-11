@@ -1,82 +1,102 @@
 exports.Region = function(){
-	this.beats = undefined;
-	this.startPoint = undefined;
-	this.endPoint = undefined;
-	this.rows = [];
-	this.steps = [];	
+	this.type = "Region";
+	this.beats = 0; // int
+	this.cells = []; //Array of Cells
 
-	this.bottomLeft = undefined;
-	this.bottomRight = undefined;
-	this.topLeft = undefined;
-	this.topRight = undefined; 
+	this.bottomLeft = undefined; // Cell
+	this.bottomRight = undefined; // Cell
+	this.topLeft = undefined; // Cell
+	this.topRight = undefined; // Cell
 };
 
-// createFromCells
-// checkOverlap
-// equals
-// getRow
 
-// adjust row
+// requires two cell inputs // maybe put in constructor?
+exports.Region.prototype.build = function(firstPoint, secondPoint){
 
-exports.Region.prototype.addCells = function(cells){
-	if (cells.length === 0 ){return;}
+	this.bottomLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+	this.topRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+	this.topLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+	this.bottomRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+	//post(secondPoint.x + "\n");
+	//post(this.topLeft.x + "\n");
 
-	if( cells.length === 1){
-        post("single cell region\n");
-		this.startpoint = cells[0];
-		this.endpoint = cells[0];
-		this.beats = 1;
-		this.steps = cells;
-		this.rows[0] = cells;
-		return;
+
+	this.beats = 0;
+	for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
+		for(var j = this.bottomLeft.x; j <= this.bottomRight.x; j++){
+			var c = new Cell.Cell(j, i);
+			this.cells.push(c);
+		}
+		this.beats++;
+	} 
+	//post(this.beats + "\n")
+
+};
+
+// TODO
+// requires region input
+exports.Region.prototype.modify = function(r){
+
+};
+
+// TODO 
+// returns 
+exports.Region.prototype.toVector = function(){
+	if(this.cells.length == 1){
+		return [1];
 	}
 
-	if (cells.length === 2){
-        post("two cell region\n");
-		this.startPoint = cells[0];
-		this.endPoint = cells[1];
+    var regionlist = [];
 
-		//log("startpoint: " + this.startPoint.x + "," + this.startPoint.y );
-		//log("endpoint: " + this.endPoint.x + " " + this.endPoint.y);
-
-		if( this.startPoint.x <= this.endPoint.x){
-			if( this.startPoint.y <= this.endPoint.y ){
-				this.bottomLeft = this.startPoint;
-				this.topRight = this.endPoint;	
-				this.topLeft = new Cell.Cell(this.startPoint.x, this.endPoint.y);
-				this.bottomRight = new Cell.Cell(this.endPoint.x, this.startPoint.y);
-			}else{
-				this.topLeft = this.startPoint;
-			}
+	var s = 1;
+	for(var i = 1; i < this.cells.length; i++){
+		if(this.cells[i-1].y != this.cells[i].y){
+			regionlist.push(s);
+			s = 1
 		}else{
-			post('yet to be implemented');
-		}
-
-		this.beats = 0;
-
-		for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
-			this.rows[this.beats] = [];
-			for(var j = this.bottomLeft.x; j <= this.bottomRight.x; j++){
-				var newCell = new Cell.Cell(j,i);
-
-				this.steps.push( newCell );
-				this.rows[this.beats].push(newCell);
-
-				post( newCell.x );
-                post(",");
-				post( newCell.y );
-                post("\n");
-			}
-			this.beats++;
+			s++;
 		}
 
 	}
-
-	if( cells.legnth > 2 ){
-		post(' bigger shapes not yet implemented' );
-	}
+	regionlist.push(s);
+    return regionlist;
 };
 
+// returns number of steps in region
+exports.Region.prototype.numberOfSteps = function(){
+	return this.cells.length;
+};
+
+// requires cell input
+exports.Region.prototype.containsCell = function(c){
+	for(var i = 0; i < this.cells.length; i++){
+		if(c.x == this.cells[i].x && c.y == this.cells[i].y){
+			return true;
+		}
+	}
+	return false;
+};
+
+// regquires region input
+exports.Region.prototype.doesOverlap = function(r){
+	for(var i = 0; i < r.cells.length; i++){
+		if(this.containsCell(r.cells[i])){
+			return true;
+		}
+	}
+	return false;
+};
+
+// requires region input
+exports.Region.prototype.leftSideAligned = function(r){
+	if(r.bottomLeft.x == this.bottomLeft.x){
+		return true;
+	}
+	return false;
+};
+
+
+/////// legacy code, maybe useful?
 exports.Region.prototype.toNotes = function(){
 	var newnotes = {};
 	newnotes.notes = [];
@@ -91,98 +111,4 @@ exports.Region.prototype.toNotes = function(){
 		}
 	}
 	return newnotes;
-}
-
-exports.Region.prototype.getRow = function(rowNumber){
-	if( rowNumber > this.beats){return undefined}
-
-	var theRow = [];
-	var startRow = this.steps[0].y;
-
-	this.steps.forEach(function(cell){
-		if( cell.y === (rowNumber + startRow ) ){
-			therow.push( cell );
-		}
-	});
-
-	return theRow;
-};
-
-exports.Region.prototype.replaceRow = function(beat, row){
-
-	//log("replace row with: ");
-	if( Array.isArray(row) ){
-		row.forEach(function(cell){log(cell)});
-		this.rows[beat] = row;
-	}else{
-		post('error adding notes to region');
-	}
-}
-
-exports.Region.prototype.toList = function(){
-    var regionlist = [];
-    //post(this.rows.length);
-    //post(this.rows[0].length);
-    for(var i = 0; i < this.rows.length; i++){
-        regionlist[i] = this.rows[i].length;
-    }
-    return regionlist;
-}
-
-exports.Region.prototype.clearBeat = function(beat){
-	// check beat is a number and within the range of beats
-	this.rows[beat] = [];	
-}
-
-exports.Region.prototype.onBeat = function( cell ){
-	if( this.steps[0].x === cell.x ){
-		return true; 
-	}else{
-		return false;
-	}
-};
-
-exports.Region.prototype.mergeRegion = function( region ){
-	
-	//log("adding region with this many rows: " +  region.rows.length );
-
-	var startingPoint; 
-	for( var i = 0; i < this.rows.length; i++){
-		if(   this.rows[i][0].equals( region.steps[0] )){
-			startingPoint = i;
-			break;
-		}
-	}
-
-	for( var i = 0; i < region.rows.length; i++){
-		this.replaceRow( startingPoint + i, region.rows[i] );	
-	}
-
-	this.rebuildRegion();
-};
-
-exports.Region.prototype.rebuildRegion = function(){
-
-	/*
-	this.bottomLeft = this.rows[0][0];	
-	this.bottomRight = this.rows[0][this.rows[0].length-1];
-	this.topLeft = this.rows[this.rows.length-1][0];
-	this.topRight = this.rows[this.rows.length-1][this.rows[this.rows.length-1].length-1];
-	*/
-
-	this.beats = this.rows.length;
-	
-	//log( this.steps );
-	this.steps =  [].concat.apply([], this.rows) ;
-
-	/*
-	this.steps = [];
-	for( var i = 0; i < this.rows.length; i++){
-		for ( var j = 0; j < this.rows[i].length; j++){
-			this.steps.push( this.rows[i,j] );
-		}
-	}
-	*/
-
-	//log('rebuilt steps. length: ' + this.steps.length );
 };

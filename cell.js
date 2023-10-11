@@ -1,7 +1,7 @@
 exports.Cell = function(x, y){
+    this.type = "Cell";
 	this.x = x;
 	this.y = y;	
-    this.type = "cell";
 	//this.midinote;
 };
 

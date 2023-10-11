@@ -1,6 +1,7 @@
 
 
 // live.grid notation is column, row, not row,column
+// takes in a list and creates cells for live.grid
 function list(){
 	var a = arrayfromargs(arguments);
 	

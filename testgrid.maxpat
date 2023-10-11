@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 401.0, 338.0, 848.0, 652.0 ],
+		"rect" : [ 82.0, 237.0, 848.0, 652.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,11 +40,62 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 362.0, 113.0, 35.0, 22.0 ],
+					"text" : "reset"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 563.0, 159.0, 150.0, 20.0 ],
+					"text" : "convert cell notation to list"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-15",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 517.0, 21.0, 256.0, 20.0 ],
+					"text" : "midi input to get cell notation"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-12",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 467.0, 159.0, 85.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "testregion.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js testregion.js"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-19",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 464.0, 282.0, 32.0, 22.0 ],
+					"patching_rect" : [ 467.0, 299.0, 32.0, 22.0 ],
 					"text" : "print"
 				}
 
@@ -63,30 +114,18 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-14",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 334.0, 185.0, 63.0, 22.0 ],
-					"text" : "padsdown"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-11",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 464.0, 230.0, 110.0, 22.0 ],
+					"patching_rect" : [ 467.0, 258.0, 97.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"filename" : "testlisttoregion.js",
+						"filename" : "testlisttogrid.js",
 						"parameter_enable" : 0
 					}
 ,
-					"text" : "js testlisttoregion.js"
+					"text" : "js testlisttogrid.js"
 				}
 
 			}
@@ -97,8 +136,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 399.0, 79.0, 45.0, 22.0 ],
-					"text" : "57 100"
+					"patching_rect" : [ 414.0, 21.0, 45.0, 22.0 ],
+					"text" : "54 100"
 				}
 
 			}
@@ -109,7 +148,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 347.0, 79.0, 45.0, 22.0 ],
+					"patching_rect" : [ 362.0, 21.0, 45.0, 22.0 ],
 					"text" : "36 100"
 				}
 
@@ -121,7 +160,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 8,
 					"outlettype" : [ "", "", "", "int", "int", "", "int", "" ],
-					"patching_rect" : [ 464.0, 89.0, 92.5, 22.0 ],
+					"patching_rect" : [ 467.0, 50.0, 92.5, 22.0 ],
 					"text" : "midiparse"
 				}
 
@@ -133,7 +172,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 464.0, 55.0, 40.0, 22.0 ],
+					"patching_rect" : [ 467.0, 21.0, 40.0, 22.0 ],
 					"text" : "midiin"
 				}
 
@@ -228,7 +267,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 1464.0, 1467.0, 640.0, 480.0 ],
+						"rect" : [ 1118.0, 880.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -311,7 +350,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 1504.0, 1252.0, 640.0, 480.0 ],
+						"rect" : [ 1118.0, 880.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -380,23 +419,12 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-29",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 488.0, 192.0, 32.0, 22.0 ],
-					"text" : "print"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-25",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 464.0, 132.0, 169.0, 22.0 ],
+					"patching_rect" : [ 467.0, 82.0, 169.0, 22.0 ],
 					"text" : "pushNoteToCellPosition $1 $2"
 				}
 
@@ -420,25 +448,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 220.0, 81.0, 35.0, 22.0 ],
+					"patching_rect" : [ 362.0, 185.0, 35.0, 22.0 ],
 					"text" : "1 2 5"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-16",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 220.0, 118.0, 85.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"filename" : "testlisttogrid",
-						"parameter_enable" : 0
-					}
-,
-					"text" : "js testlisttogrid"
 				}
 
 			}
@@ -481,7 +492,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 464.0, 165.0, 153.0, 22.0 ],
+					"patching_rect" : [ 467.0, 115.0, 153.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"filename" : "pushmidiinputmanager.js",
 						"parameter_enable" : 0
@@ -501,7 +512,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-16", 0 ],
+					"destination" : [ "obj-13", 0 ],
 					"order" : 1,
 					"source" : [ "obj-11", 0 ]
 				}
@@ -518,14 +529,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-11", 0 ],
-					"source" : [ "obj-14", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-13", 0 ],
-					"source" : [ "obj-16", 0 ]
+					"source" : [ "obj-12", 0 ]
 				}
 
 			}
@@ -538,7 +542,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-16", 0 ],
+					"destination" : [ "obj-11", 0 ],
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -566,16 +570,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-11", 0 ],
-					"order" : 1,
-					"source" : [ "obj-4", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-29", 0 ],
-					"order" : 0,
+					"destination" : [ "obj-12", 0 ],
 					"source" : [ "obj-4", 0 ]
 				}
 
@@ -598,6 +593,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-25", 0 ],
 					"source" : [ "obj-8", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 0 ],
+					"source" : [ "obj-9", 0 ]
 				}
 
 			}
@@ -624,7 +626,21 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "region.js",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "testlisttogrid.js",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "testregion.js",
 				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
