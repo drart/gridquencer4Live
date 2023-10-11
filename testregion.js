@@ -1,7 +1,11 @@
+outlets = 2;
+
 var Cell = require("cell");
 var Region = require("region");
 
 var padsDown = [];
+
+
 
 function list(){
 	var a = arrayfromargs(arguments);
@@ -10,12 +14,16 @@ function list(){
 	//post(c);
 	
 	if(padsDown.length == 2){
-		var r = new Region.Region();
+		var r = new Region.Region(padsDown[0], padsDown[1]);
 		//post( padsDown[0].x + "\n" );
-		r.build( padsDown[0], padsDown[1] );
 		//post(r.cells.length + "\n");
 		var regionVector = r.toVector();
 		//post(regionVector);
+		for(var i = 0 ; i < r.cells.length; i++){
+			var celllist = [r.cells[i].x, r.cells[i].y];
+			outlet(1, celllist);
+		}
+		//outlet(1, r.toVectorWithOrigin() );
 		outlet(0, regionVector);
 		reset();
 	}

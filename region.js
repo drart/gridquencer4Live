@@ -1,17 +1,8 @@
-exports.Region = function(){
+// requires cell input (two!)
+exports.Region = function(firstPoint, secondPoint){
 	this.type = "Region";
 	this.beats = 0; // int
 	this.cells = []; //Array of Cells
-
-	this.bottomLeft = undefined; // Cell
-	this.bottomRight = undefined; // Cell
-	this.topLeft = undefined; // Cell
-	this.topRight = undefined; // Cell
-};
-
-
-// requires two cell inputs // maybe put in constructor?
-exports.Region.prototype.build = function(firstPoint, secondPoint){
 
 	this.bottomLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
 	this.topRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
@@ -39,8 +30,7 @@ exports.Region.prototype.modify = function(r){
 
 };
 
-// TODO 
-// returns 
+// returns vector representation of region
 exports.Region.prototype.toVector = function(){
 	if(this.cells.length == 1){
 		return [1];
@@ -61,6 +51,13 @@ exports.Region.prototype.toVector = function(){
 	regionlist.push(s);
     return regionlist;
 };
+
+exports.Region.prototype.toVectorWithOrigin = function(){
+	var origin = [this.bottomLeft.x, this.bottomLeft.y];
+	var regionlist = this.toVector();
+	var biglist = origin.concat(regionlist);
+	return biglist;
+}
 
 // returns number of steps in region
 exports.Region.prototype.numberOfSteps = function(){
