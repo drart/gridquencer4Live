@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 1240.0, 1292.0, 672.0, 652.0 ],
+		"rect" : [ 401.0, 338.0, 848.0, 652.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -97,8 +97,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 417.0, 79.0, 29.5, 22.0 ],
-					"text" : "57"
+					"patching_rect" : [ 399.0, 79.0, 45.0, 22.0 ],
+					"text" : "57 100"
 				}
 
 			}
@@ -109,8 +109,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 382.0, 79.0, 29.5, 22.0 ],
-					"text" : "36"
+					"patching_rect" : [ 347.0, 79.0, 45.0, 22.0 ],
+					"text" : "36 100"
 				}
 
 			}
@@ -396,8 +396,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 464.0, 132.0, 153.0, 22.0 ],
-					"text" : "pushNoteToCellPosition $1"
+					"patching_rect" : [ 464.0, 132.0, 169.0, 22.0 ],
+					"text" : "pushNoteToCellPosition $1 $2"
 				}
 
 			}
@@ -618,28 +618,14 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "pushmidiinputmanager.js",
-				"bootpath" : "~/test/g4l/gridquencer4Live",
-				"patcherrelativepath" : ".",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "region.js",
-				"bootpath" : "~/test/g4l/gridquencer4Live",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "testlisttogrid.js",
-				"bootpath" : "~/test/g4l/gridquencer4Live",
-				"patcherrelativepath" : ".",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "testlisttoregion.js",
-				"bootpath" : "~/test/g4l/gridquencer4Live",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
