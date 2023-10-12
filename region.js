@@ -92,7 +92,6 @@ exports.Region.prototype.leftSideAligned = function(r){
 	return false;
 };
 
-
 /////// legacy code, maybe useful?
 exports.Region.prototype.toNotes = function(){
 	var newnotes = {};
