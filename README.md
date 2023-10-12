@@ -12,6 +12,8 @@ Put the device onto a track. When that track is selected the device will take ov
 
 
 TODO
+  - modify a region to adjust its form
+  - manage each region to a specific sequencer
   - create a heuristics to apply to note generation
   - use controlSurface API for connecting to Push instead of MIDI messages
   - adjust lights when sequence plays
