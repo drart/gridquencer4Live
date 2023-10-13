@@ -1,3 +1,5 @@
+var Cell = require("./cell");
+
 // requires cell input (two!)
 exports.Region = function(firstPoint, secondPoint){
 	this.type = "Region";
@@ -8,9 +10,6 @@ exports.Region = function(firstPoint, secondPoint){
 	this.topRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
 	this.topLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
 	this.bottomRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
-	//post(secondPoint.x + "\n");
-	//post(this.topLeft.x + "\n");
-
 
 	this.beats = 0;
 	for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
@@ -20,14 +19,45 @@ exports.Region = function(firstPoint, secondPoint){
 		}
 		this.beats++;
 	} 
-	//post(this.beats + "\n")
-
 };
 
 // TODO
 // requires region input
+// keeps cells before new region, removes all cells in the same rows, appends remaining cells
 exports.Region.prototype.modify = function(r){
+    if( this.leftSideAligned(r) ){
+        var preRegionCells = []
 
+        var newRegionRows = []; // get the y indices of all of the rows in new region
+        newRegionRows[0] = r.cells[0].y;
+        for(var i = 1; i < r.cells.length; i++){
+            if ( r.cells[i-1].y != r.cells[i].y ){
+                newRegionRows.push( r.cells[i].y );
+            }
+        }
+
+        this.cells = this.cells.filter(function(c){ // remove all cells in the same row
+            for(var i = 0; i < newRegionRows.length; i++){
+                if( c.y === newRegionRows[i] ){
+                    return false;
+                }
+            }
+            return true; 
+        });
+
+        this.cells = this.cells.concat( r.cells );
+        this.cells.sort( function(a, b){
+            if( a.y < b.y){
+                return -1; 
+            }
+            if( a.y > b.y){
+                return 1;
+            }
+            return 0; 
+        });
+        return true;
+    }
+    return false;
 };
 
 // returns vector representation of region
@@ -52,12 +82,13 @@ exports.Region.prototype.toVector = function(){
     return regionlist;
 };
 
+// returns vector representtion starting with origin, useful in maxmsp
 exports.Region.prototype.toVectorWithOrigin = function(){
 	var origin = [this.bottomLeft.x, this.bottomLeft.y];
 	var regionlist = this.toVector();
 	var biglist = origin.concat(regionlist);
 	return biglist;
-}
+};
 
 // returns number of steps in region
 exports.Region.prototype.numberOfSteps = function(){
@@ -67,7 +98,7 @@ exports.Region.prototype.numberOfSteps = function(){
 // requires cell input
 exports.Region.prototype.containsCell = function(c){
 	for(var i = 0; i < this.cells.length; i++){
-		if(c.x == this.cells[i].x && c.y == this.cells[i].y){
+		if(c.x === this.cells[i].x && c.y === this.cells[i].y){
 			return true;
 		}
 	}
@@ -86,7 +117,7 @@ exports.Region.prototype.doesOverlap = function(r){
 
 // requires region input
 exports.Region.prototype.leftSideAligned = function(r){
-	if(r.bottomLeft.x == this.bottomLeft.x){
+	if(r.bottomLeft.x === this.bottomLeft.x){
 		return true;
 	}
 	return false;
