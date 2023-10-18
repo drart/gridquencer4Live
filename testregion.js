@@ -1,7 +1,11 @@
 outlets = 2;
 
-var Cell = require("cell");
-var Region = require("region");
+var Cell = require("cell").Cell;
+var Region = require("region").Region;
+
+
+var c = new Cell(4,4);
+post(c.x);
 
 var padsDown = [];
 

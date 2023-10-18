@@ -1,21 +1,26 @@
 inlets = 1;
 outlets = 2;
 
-var Cell = require("cell");
-var Region = require("region");
-var Grid = require("grid"); // require("Grid").Grid; /// ? 
+var Cell = require("cell").Cell;
+var Region = require("region").Region;
+var Grid = require("grid").Grid; 
 
 var padsDown = [];
-var thegrid = new Grid.Grid();
+var ccc = new Cell(3,3);
+post(ccc.x);
+var thegrid = new Grid();
 
 function list(){
 	var a = arrayfromargs(arguments);
-	var c = new Cell.Cell(a[0], a[1]);
+
+	post(a[0]);
+	var c = new Cell(a[0], a[1]);
+	post(c.y);
 	padsDown.push(c);
 	//post(c);
 	
 	if(padsDown.length === 2){
-		var r = new Region.Region(padsDown[0], padsDown[1]);
+		var r = new Region(padsDown[0], padsDown[1]);
 		//post( padsDown[0].x + "\n" );
 		//post(r.cells.length + "\n");
 		thegrid.addRegion(r);
@@ -31,8 +36,6 @@ function list(){
 		reset();
 	}
 }
-
-
 
 function getCells(){
 	// print grid cells out right outlet for live.grid?

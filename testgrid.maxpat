@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 62.0, 1148.0, 982.0 ],
+		"rect" : [ 194.0, 125.0, 1151.0, 884.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,47 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-16",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 403.0, 103.0, 45.0, 22.0 ],
+					"text" : "84 100"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-12",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 349.5, 103.0, 45.0, 22.0 ],
+					"text" : "69 100"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-11",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 1008.0, 332.0, 85.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"filename" : "testregion.js",
+						"parameter_enable" : 0
+					}
+,
+					"text" : "js testregion.js"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-123",
 					"maxclass" : "newobj",
@@ -2588,7 +2629,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 751.0, 260.0, 640.0, 480.0 ],
+						"rect" : [ 823.0, 195.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3302,6 +3343,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"midpoints" : [ 357.0, 124.0 ],
+					"source" : [ "obj-12", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-121", 0 ],
 					"source" : [ "obj-120", 0 ]
 				}
@@ -3356,6 +3405,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
 					"source" : [ "obj-14", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"source" : [ "obj-16", 0 ]
 				}
 
 			}
@@ -3618,7 +3674,21 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "region.js",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "testgrid.js",
+				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "testregion.js",
 				"bootpath" : "~/Documents/Gridquencer/gridquencer4Live",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",

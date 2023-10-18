@@ -1,5 +1,3 @@
-var Cell = require("./cell");
-var Region = require("./region");
 
 exports.Grid = function(){
 
@@ -19,7 +17,7 @@ exports.Grid.prototype.addRegion = function(region){
     if( doesOverlap ){
         var overlappingRegions = this.getOverlappingRegions(region);
         if(overlappingRegions.length === 1){
-            console.log('lkajjflkjadljfkadjflkajdklfjd');
+            //console.log('lkajjflkjadljfkadjflkajdklfjd');
             if(region.leftSideAligned(overlappingRegions[0])){
                 overlappingRegions[0].modify(region);
                 return true; 
@@ -97,5 +95,6 @@ exports.Grid.prototype.testTwoObjects = function( object1, object2 ){
 	// works
 	return JSON.stringify(object1) === JSON.stringify(object2);
 }
+
 
 //exports.Grid.prototype.toString = function(){ return "grid"; );

@@ -1,30 +1,28 @@
-var Cell = require("./cell");
-
+var Cell = require("cell").Cell;
 // requires cell input (two!)
-exports.Region = function(firstPoint, secondPoint){
+function Region(firstPoint, secondPoint){
 	this.type = "Region";
 	this.beats = 0; // int
 	this.cells = []; //Array of Cells
 
-	this.bottomLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
-	this.topRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
-	this.topLeft = new Cell.Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
-	this.bottomRight = new Cell.Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+	this.bottomLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+	this.topRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+	this.topLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+	this.bottomRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
 
 	this.beats = 0;
 	for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
 		for(var j = this.bottomLeft.x; j <= this.bottomRight.x; j++){
-			var c = new Cell.Cell(j, i);
+			var c = new Cell(j, i);
 			this.cells.push(c);
 		}
 		this.beats++;
 	} 
 };
 
-// TODO
 // requires region input
 // keeps cells before new region, removes all cells in the same rows, appends remaining cells
-exports.Region.prototype.modify = function(r){
+Region.prototype.modify = function(r){
     if( this.leftSideAligned(r) ){
         var preRegionCells = []
 
@@ -55,13 +53,14 @@ exports.Region.prototype.modify = function(r){
             }
             return 0; 
         });
+
         return true;
     }
     return false;
 };
 
 // returns vector representation of region
-exports.Region.prototype.toVector = function(){
+Region.prototype.toVector = function(){
 	if(this.cells.length == 1){
 		return [1];
 	}
@@ -83,7 +82,7 @@ exports.Region.prototype.toVector = function(){
 };
 
 // returns vector representtion starting with origin, useful in maxmsp
-exports.Region.prototype.toVectorWithOrigin = function(){
+Region.prototype.toVectorWithOrigin = function(){
 	var origin = [this.bottomLeft.x, this.bottomLeft.y];
 	var regionlist = this.toVector();
 	var biglist = origin.concat(regionlist);
@@ -91,12 +90,12 @@ exports.Region.prototype.toVectorWithOrigin = function(){
 };
 
 // returns number of steps in region
-exports.Region.prototype.numberOfSteps = function(){
+Region.prototype.numberOfSteps = function(){
 	return this.cells.length;
 };
 
 // requires cell input
-exports.Region.prototype.containsCell = function(c){
+Region.prototype.containsCell = function(c){
 	for(var i = 0; i < this.cells.length; i++){
 		if(c.x === this.cells[i].x && c.y === this.cells[i].y){
 			return true;
@@ -106,7 +105,7 @@ exports.Region.prototype.containsCell = function(c){
 };
 
 // regquires region input
-exports.Region.prototype.doesOverlap = function(r){
+Region.prototype.doesOverlap = function(r){
 	for(var i = 0; i < r.cells.length; i++){
 		if(this.containsCell(r.cells[i])){
 			return true;
@@ -116,7 +115,7 @@ exports.Region.prototype.doesOverlap = function(r){
 };
 
 // requires region input
-exports.Region.prototype.leftSideAligned = function(r){
+Region.prototype.leftSideAligned = function(r){
 	if(r.bottomLeft.x === this.bottomLeft.x){
 		return true;
 	}
@@ -124,7 +123,7 @@ exports.Region.prototype.leftSideAligned = function(r){
 };
 
 /////// legacy code, maybe useful?
-exports.Region.prototype.toNotes = function(){
+Region.prototype.toNotes = function(){
 	var newnotes = {};
 	newnotes.notes = [];
 	
@@ -139,3 +138,5 @@ exports.Region.prototype.toNotes = function(){
 	}
 	return newnotes;
 };
+
+exports.Region = Region;
