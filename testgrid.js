@@ -7,7 +7,7 @@ var Grid = require("grid").Grid;
 
 var padsDown = [];
 var ccc = new Cell(3,3);
-post(ccc.x);
+post(ccc.x + "\n");
 var thegrid = new Grid();
 
 function list(){
@@ -23,9 +23,9 @@ function list(){
 		var r = new Region(padsDown[0], padsDown[1]);
 		//post( padsDown[0].x + "\n" );
 		//post(r.cells.length + "\n");
-		thegrid.addRegion(r);
+		var resultingRegion = thegrid.addRegion(r);
 		
-		var regionVector = r.toVector();
+		var regionVector = resultingRegion.toVector();
 		//post(regionVector);
 		for(var i = 0 ; i < r.cells.length; i++){
 			var celllist = [r.cells[i].x, r.cells[i].y, 1];

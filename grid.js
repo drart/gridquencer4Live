@@ -10,7 +10,7 @@ exports.Grid = function(){
 exports.Grid.prototype.addRegion = function(region){
 	if(this.allowOverlap){
 		this.regions.push(region);
-		return true;
+		return this.regions[this.regions.length-1];
 	}
 
     var doesOverlap = this.doesRegionOverlap( region );
@@ -20,13 +20,13 @@ exports.Grid.prototype.addRegion = function(region){
             //console.log('lkajjflkjadljfkadjflkajdklfjd');
             if(region.leftSideAligned(overlappingRegions[0])){
                 overlappingRegions[0].modify(region);
-                return true; 
+                return overlappingRegions[0]; 
             }
         }
-        return false;
+        return undefined;
     }else{
         this.regions.push(region);
-        return true;
+        return this.regions[this.regions.length-1];;
     }
 };
 
