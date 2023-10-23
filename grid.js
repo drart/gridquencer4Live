@@ -58,6 +58,15 @@ exports.Grid.prototype.containsCell = function(cell){
 	return false;
 };
 
+exports.Grid.prototype.getRegionIndex = function(region){
+    for(var i = 0; i < this.regions.length; i++){
+        if(this.regions[i].equals(region) ){
+            return i;
+        }
+    }
+    return -1;
+}
+
 exports.Grid.prototype.removeRegion = function(region){
 	// find region
 	// remove from this.regions

@@ -1,5 +1,5 @@
 inlets = 1;
-outlets = 2;
+outlets = 3;
 
 var Cell = require("cell").Cell;
 var Region = require("region").Region;
@@ -13,20 +13,22 @@ var thegrid = new Grid();
 function list(){
 	var a = arrayfromargs(arguments);
 
-	post(a[0]);
+	//post(a[0]);
 	var c = new Cell(a[0], a[1]);
-	post(c.y);
+	//post(c.y);
 	padsDown.push(c);
 	//post(c);
 	
 	if(padsDown.length === 2){
 		var r = new Region(padsDown[0], padsDown[1]);
 		//post( padsDown[0].x + "\n" );
-		//post(r.cells.length + "\n");
 		var resultingRegion = thegrid.addRegion(r);
 		
 		var regionVector = resultingRegion.toVector();
-		//post(regionVector);
+		//post(r.cells.length + "\n");
+    
+		outlet(2,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
+		
 		for(var i = 0 ; i < r.cells.length; i++){
 			var celllist = [r.cells[i].x, r.cells[i].y, 1];
 			outlet(1, celllist);

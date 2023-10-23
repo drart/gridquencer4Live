@@ -1,4 +1,4 @@
-var Cell = require("cell").Cell;
+var Cell = require("./cell").Cell;
 // requires cell input (two!)
 function Region(firstPoint, secondPoint){
 	this.type = "Region";
@@ -53,7 +53,12 @@ Region.prototype.modify = function(r){
             }
             return 0; 
         });
-
+        var firstPoint = this.cells[0];
+        var secondPoint = this.cells[this.cells.length-1];
+        this.bottomLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+        this.topRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+        this.topLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+        this.bottomRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
         return true;
     }
     return false;
@@ -139,4 +144,7 @@ Region.prototype.toNotes = function(){
 	return newnotes;
 };
 
+Region.prototype.equals = function(r){
+    return  r == this;
+}
 exports.Region = Region;
