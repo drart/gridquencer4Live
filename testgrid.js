@@ -1,5 +1,9 @@
+// inlet takees list of x,y position
 inlets = 1;
-outlets = 3;
+// outlet 1 gives the vector representation of a region
+// outlet 2 origin of the region // todo 
+// outlet 3 index of the region
+outlets = 4;
 
 var Cell = require("cell").Cell;
 var Region = require("region").Region;
@@ -13,28 +17,25 @@ var thegrid = new Grid();
 function list(){
 	var a = arrayfromargs(arguments);
 
-	//post(a[0]);
 	var c = new Cell(a[0], a[1]);
-	//post(c.y);
 	padsDown.push(c);
-	//post(c);
 	
 	if(padsDown.length === 2){
 		var r = new Region(padsDown[0], padsDown[1]);
-		//post( padsDown[0].x + "\n" );
 		var resultingRegion = thegrid.addRegion(r);
-		
 		var regionVector = resultingRegion.toVector();
-		//post(r.cells.length + "\n");
     
-		//outlet(2,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
-		
+		outlet(3,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
+
+		outlet(2, thegrid.getRegionIndex(resultingRegion));
+
+		/*
 		for(var i = 0 ; i < r.cells.length; i++){
 			var celllist = [r.cells[i].x, r.cells[i].y, 1];
 			outlet(1, celllist);
 		}
-		
-		outlet(2, thegrid.getRegionIndex(resultingRegion));
+		*/
+		outlet(1,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
 
 		outlet(0, regionVector);
 		//outlet(2, resultingRegion.toVectorWithOrigin() ); // works well
