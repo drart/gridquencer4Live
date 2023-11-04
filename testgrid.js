@@ -27,14 +27,17 @@ function list(){
 		var regionVector = resultingRegion.toVector();
 		//post(r.cells.length + "\n");
     
-		outlet(2,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
+		//outlet(2,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] );
 		
 		for(var i = 0 ; i < r.cells.length; i++){
 			var celllist = [r.cells[i].x, r.cells[i].y, 1];
 			outlet(1, celllist);
 		}
-		//outlet(1, r.toVectorWithOrigin() );
+		
+		outlet(2, thegrid.getRegionIndex(resultingRegion));
+
 		outlet(0, regionVector);
+		//outlet(2, resultingRegion.toVectorWithOrigin() ); // works well
 		reset();
 	}
 }

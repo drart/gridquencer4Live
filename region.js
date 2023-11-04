@@ -1,4 +1,4 @@
-var Cell = require("./cell").Cell;
+var Cell = require("cell").Cell;
 // requires cell input (two!)
 function Region(firstPoint, secondPoint){
 	this.type = "Region";
