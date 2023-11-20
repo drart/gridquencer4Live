@@ -9,17 +9,15 @@ outlets = 4;
 var Cell = require("cell").Cell;
 var Region = require("region").Region;
 var Grid = require("grid").Grid; 
+var Sequence = require("sequence").Sequence;
 
 var thegrid = new Grid();
 
 var sync = new SyncManager();
 var output = new OutputManager();
 
-var s = {
-	tempo: 100,
-	sequences: [],
-};
 var padsDown = [];
+var seqs = [];
 
 function list(){ // TODO x,y,z?
 	var a = arrayfromargs(arguments);
@@ -28,11 +26,21 @@ function list(){ // TODO x,y,z?
 	sync.input(c);
 }
 
-
-function sync(){
+function syncstep(val){ // voiceNumber, index
 	var a = arrayfromargs(arguments);
 	
-	//sync.input(a);
+	var voiceIndex = a[0];
+	var r = thegrid.regions[voiceIndex];
+	var sequenceIndex = a[1];	
+	var previousIndex = sequenceIndex - 1;
+	if (previousIndex === -1){
+		previousIndex = r.cells.length - 1;
+	}
+		
+	// current step highlight colour
+    outlet(3, r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, "white");
+	// previous step sequence colour
+	outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, "blue");
 }
 
 function getCells(){
@@ -54,10 +62,8 @@ function mode(){
 }
 
 function SyncManager (){
-	
 	this.mode = 0; // input, select, shift, mute
 	this.padsDown = [];
-
 };
 
 SyncManager.prototype.input = function(c){
@@ -74,12 +80,27 @@ SyncManager.prototype.input = function(c){
             var regionVector = resultingRegion.toVector();
             var regionIndex = thegrid.getRegionIndex(resultingRegion);
 
-            output.something(resultingRegion.toVectorWithOrigin(), regionIndex);
             // syncmanager -> outputmanager outlet 3
+            output.something(resultingRegion.toVectorWithOrigin(), regionIndex);
 
             outlet(2, regionIndex);
-            outlet(1,  [resultingRegion.bottomLeft.x, resultingRegion.bottomLeft.y] ); // origin
-            outlet(0, regionVector); // TODO vector or vectorwithorigin?
+            outlet(1, regionVector); 
+
+            ///// TODO put in other object
+            ///////// vectoToMatches from sequence.js
+            var sum = 0;
+            var myarray = [];
+            var beatLength = 1 / regionVector.length;
+	
+            for(var i = 0; i < regionVector.length; i++){
+                for(var j = 0; j < regionVector[i]; j++){
+                    myarray.push( i*beatLength + (beatLength / regionVector[i])*j );
+                }
+            }
+            outlet(0, myarray);
+            //// end vectorToMatches
+            //////// 
+
             reset();
         }	
             
@@ -105,6 +126,7 @@ SyncManager.prototype.input = function(c){
 
 function OutputManager(){
 	this.shapes = []; // this is a cached version of the region shapes
+    //this.sequences = [];
 };
 
 OutputManager.prototype.something = function(vectorWithOrigin, index){
@@ -112,7 +134,8 @@ OutputManager.prototype.something = function(vectorWithOrigin, index){
 
 	if(this.shapes[index] === undefined){ // add region
         for(var i = 0 ; i < r.cells.length; i++){
-            var celllist = [r.cells[i].x, r.cells[i].y, 1];
+            var celllist = [r.cells[i].x, r.cells[i].y, "blue"];
+            //var s = new Sequence();
             outlet(3, celllist);
         }
 	}else{ // modify the region
@@ -124,14 +147,14 @@ OutputManager.prototype.something = function(vectorWithOrigin, index){
                     for(var j = this.shapes[index][i]; j < vectorWithOrigin[i]; j++){
                         var x = vectorWithOrigin[0] + j;
                         var y = vectorWithOrigin[1] + i - 2;
-                        var celllist = [x, y, 1];
+                        var celllist = [x, y, "blue"];
                         outlet(3, celllist);
                     }
                 }else{
                     for(var j = vectorWithOrigin[i]; j < this.shapes[index][i]; j++){
                         var x = vectorWithOrigin[0] + j;
                         var y = vectorWithOrigin[1] + i - 2;
-                        var celllist = [x, y, 0];
+                        var celllist = [x, y, "grey"];
                         outlet(3, celllist);
                     }
                 }
