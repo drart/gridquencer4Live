@@ -68,6 +68,9 @@ SyncManager.prototype.input = function(c){
         if(padsDown.length === 2){
             var r = new Region(padsDown[0], padsDown[1]);
             var resultingRegion = thegrid.addRegion(r);
+            if(resultingRegion === undefined){
+                return;
+            }
             var regionVector = resultingRegion.toVector();
             var regionIndex = thegrid.getRegionIndex(resultingRegion);
 
@@ -106,35 +109,36 @@ function OutputManager(){
 
 OutputManager.prototype.something = function(vectorWithOrigin, index){
     var r = thegrid.regions[index];
-	if(this.shapes[index] === undefined){
-		post("add region\n");
+
+	if(this.shapes[index] === undefined){ // add region
         for(var i = 0 ; i < r.cells.length; i++){
             var celllist = [r.cells[i].x, r.cells[i].y, 1];
             outlet(3, celllist);
         }
-	}else{
-		post("modify region\n");
-		// modify the region
+	}else{ // modify the region
         var c = new Cell(vectorWithOrigin[0], vectorWithOrigin[1]);
         for(var i = 2; i < vectorWithOrigin.length; i++){
+
             if(vectorWithOrigin[i] !== this.shapes[index][i]){
-                post(i + '\n');
                 if(vectorWithOrigin[i] > this.shapes[index][i]){
-                    post(" row bigger\n");
-                    // TODO add more cells
-                    // for number of cells to add
-                    // var celllist = [r.cells[j].x, r.cells[j].y, 1];
-                    // outlet(3, celllist);
+                    for(var j = this.shapes[index][i]; j < vectorWithOrigin[i]; j++){
+                        var x = vectorWithOrigin[0] + j;
+                        var y = vectorWithOrigin[1] + i - 2;
+                        var celllist = [x, y, 1];
+                        outlet(3, celllist);
+                    }
                 }else{
-                    post(" row shorter\n");
-                    // todo send note off to cells that are no longer needed
-                    // for number of cells to remove
-                    // var celllist = [r.cells[j].x, r.cells[j].y, 0];
-                    // outlet(3, celllist);
+                    for(var j = vectorWithOrigin[i]; j < this.shapes[index][i]; j++){
+                        var x = vectorWithOrigin[0] + j;
+                        var y = vectorWithOrigin[1] + i - 2;
+                        var celllist = [x, y, 0];
+                        outlet(3, celllist);
+                    }
                 }
             }
         }
 	}
+
 	this.shapes[index] = vectorWithOrigin;
 };
 
@@ -142,3 +146,5 @@ OutputManager.prototype.something = function(vectorWithOrigin, index){
 OutputManager.prototype.sync = function(c){
 };
 
+function RegionSequenceMediator(){
+};

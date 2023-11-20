@@ -1,4 +1,35 @@
+outlets = 2;
+/*
+//https://forum.ableton.com/viewtopic.php?t=192920
+BLACK = 0
 
+WHITE_HI = 3
+WHITE_LO = 1
+
+RED_HI = 120
+RED_LO = 7
+
+ORANGE_HI = 60
+ORANGE_LO = 10
+
+YELLOW_HI = 13
+YELLOW_LO = 15
+
+GREEN_HI = 21
+GREEN_LO = 23
+
+CYAN_HI = 33
+CYAN_LO = 35
+
+BLUE_HI = 45
+BLUE_LO = 47
+
+INDIGO_HI = 49
+INDIGO_LO = 51
+
+VIOLET_HI = 53
+VIOLET_LO = 55
+*/
 
 function pushNoteToCellPosition(note, velo){
 	if(velo == 0 ){
@@ -15,5 +46,14 @@ function pushNoteToCellPosition(note, velo){
 	
 	//return position;
 	outlet(0, position);
+}
+
+function CellToPushNote(x, y, colour){
+	var note = y*8 + x + 36; 
+	var outputcolour = 3;
+	if(colour === 'blue'){
+		outputcolour = 45;
+	}
+	outlet(1, note, outputcolour);
 }
 

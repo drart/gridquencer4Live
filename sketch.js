@@ -22,7 +22,7 @@ const s = ( sketch ) => {
             window.max.bindInlet('grid', sketch.colourSquare);
             window.max.bindInlet('clear', sketch.clearGrid);
 
-            window.max.outlet('lkdf');
+            //window.max.outlet('lkdf');
         }
 
         sketch.createCanvas(400,400);
@@ -61,7 +61,7 @@ const s = ( sketch ) => {
 
     sketch.clearGrid = () => {
         for( let s of squares ){
-            s.color = "white";
+            s.color = "grey";
         }
     };
 
@@ -69,7 +69,7 @@ const s = ( sketch ) => {
         for ( sqr of squares ){
             if( sqr.clicked() ){
                 if(maxIsDetected){
-                    window.max.outlet(sqr.xindex, sqr.yindex);
+                    window.max.outlet("grid", sqr.xindex, sqr.yindex);
                 }
             }
         }
