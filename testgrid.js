@@ -17,7 +17,7 @@ var sync = new SyncManager();
 var output = new OutputManager();
 
 var padsDown = [];
-var seqs = [];
+var sequences = [];
 
 function list(){ // TODO x,y,z?
 	var a = arrayfromargs(arguments);
@@ -31,7 +31,7 @@ function syncstep(val){ // voiceNumber, index
 	
 	var voiceIndex = a[0];
 	var r = thegrid.regions[voiceIndex];
-	var sequenceIndex = a[1];	
+	var sequenceIndex = a[1]; //  + s[voiceIndex].shift TODO 
 	var previousIndex = sequenceIndex - 1;
 	if (previousIndex === -1){
 		previousIndex = r.cells.length - 1;
@@ -48,6 +48,10 @@ function getCells(){
 }
 
 function reset(){
+    // TODO
+    if(padsDown.length === 1){ 
+		sync.input();
+    }
 	padsDown = [];
 }
 
@@ -61,26 +65,40 @@ function mode(){
 	//this.mode = val;
 }
 
+
+function delete(index){
+	// empty padsdown
+	// empty sequences
+	// clear grid
+	// send clearing messages to sequencer
+}
+
 function SyncManager (){
-	this.mode = 0; // input, select, shift, mute
+	this.mode = 0; // input, select, shift, mute, move regions
 	this.padsDown = [];
 };
 
 SyncManager.prototype.input = function(c){
 	if(this.mode === 0){ // entry mode - default
 		
-		padsDown.push(c);
+		if( c !== undefined ){
+			padsDown.push(c);
+		}
+		
+        if(padsDown.length === 1){ // TODO distinct or wrap into next block?
+			c = padsDown[0]; // ?????
+        }
         
         if(padsDown.length === 2){
             var r = new Region(padsDown[0], padsDown[1]);
             var resultingRegion = thegrid.addRegion(r);
             if(resultingRegion === undefined){
-                return;
+                return;/// if region overlaps with another in a non-modifiable way then return
             }
             var regionVector = resultingRegion.toVector();
             var regionIndex = thegrid.getRegionIndex(resultingRegion);
 
-            // syncmanager -> outputmanager outlet 3
+			/// MODE MANAGER TODO BETTER NAMING
             output.something(resultingRegion.toVectorWithOrigin(), regionIndex);
 
             outlet(2, regionIndex);
@@ -97,6 +115,7 @@ SyncManager.prototype.input = function(c){
                     myarray.push( i*beatLength + (beatLength / regionVector[i])*j );
                 }
             }
+            sequences[regionIndex] = myarray;
             outlet(0, myarray);
             //// end vectorToMatches
             //////// 
@@ -116,7 +135,10 @@ SyncManager.prototype.input = function(c){
 		for(var i = 0; i < thegrid.regions.length; i++){
 			if(thegrid.regions[i].contains(c)){
 				var idx = thegrid.regions[i].cellIndex(c);
-				s.sequences[i].shift = i;
+				sequences[i].shift = idx;
+                // TODO 
+                // outlet(2, i);
+                // outlet(0, "shift", sequences[i].getMatches
 				return;
 			}
 		}

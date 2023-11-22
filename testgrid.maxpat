@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 62.0, 1112.0, 1024.0 ],
+		"rect" : [ 34.0, 62.0, 1607.0, 1024.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,42 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-59",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 433.75, 549.0, 150.0, 33.0 ],
+					"text" : "TODO make interface \nfor each channel"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-55",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "signal" ],
+					"patching_rect" : [ 470.0, 578.0, 41.0, 22.0 ],
+					"text" : "sig~ 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-54",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "multichannelsignal" ],
+					"patching_rect" : [ 471.0, 604.0, 57.0, 22.0 ],
+					"text" : "mc.pow~"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-79",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -57,7 +93,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 801.0, 176.0, 50.0, 22.0 ],
-					"text" : "90 45"
+					"text" : "69 45"
 				}
 
 			}
@@ -91,7 +127,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+						"rect" : [ 59.0, 81.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1630,12 +1666,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-37",
-					"linecount" : 11,
+					"linecount" : 15,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 978.0, 344.0, 204.0, 154.0 ],
-					"text" : "sequence colours\ntuplet vs cross mode\nshift \n\nmake a reset button?\ndelete a seqeunce \ndelete all sequences (and data?)\n\ndisplaymanager\ngesture converter\nRegionSequenceMediator"
+					"patching_rect" : [ 978.0, 344.0, 204.0, 208.0 ],
+					"text" : "sequence colours\ntuplet vs cross mode\nshift \nsequence rates\n\nmake a reset button?\ndelete a seqeunce \ndelete all sequences (and data?)\n\n\nslip and slop\n\ndisplaymanager\ngesture converter\nRegionSequenceMediator"
 				}
 
 			}
@@ -2194,8 +2230,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "multichannelsignal", "", "" ],
-					"patching_rect" : [ 513.0, 660.0, 166.0, 22.0 ],
-					"text" : "mc.what~ -1. @sync changes"
+					"patching_rect" : [ 513.0, 660.0, 154.0, 22.0 ],
+					"text" : "mc.what~ -1. @syncupdate"
 				}
 
 			}
@@ -2206,7 +2242,7 @@
 					"numinlets" : 8,
 					"numoutlets" : 1,
 					"outlettype" : [ "multichannelsignal" ],
-					"patching_rect" : [ 509.0, 444.0, 92.5, 22.0 ],
+					"patching_rect" : [ 509.0, 436.0, 92.5, 22.0 ],
 					"text" : "mc.pack~ 8"
 				}
 
@@ -2766,6 +2802,20 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-3", 0 ],
+					"source" : [ "obj-54", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-54", 0 ],
+					"source" : [ "obj-55", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-39", 0 ],
 					"source" : [ "obj-6", 0 ]
 				}
@@ -2822,7 +2872,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-3", 0 ],
+					"destination" : [ "obj-54", 1 ],
 					"order" : 1,
 					"source" : [ "obj-8", 0 ]
 				}
