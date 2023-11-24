@@ -12,17 +12,21 @@ Put the device onto a track. When that track is selected the device will take ov
 
 
 TODO
-  - modify a region to adjust its form
-  - manage each region to a specific sequencer
+  - phase shift a sequence
+  - implement mode switching (sequence, shift, move, select, mute)
   - create a heuristics to apply to note generation
   - use controlSurface API for connecting to Push instead of MIDI messages
-  - adjust lights when sequence plays
   - load sequences from a track? 
   - Associate pads with note ids
   - Think about rests in a sequence 
-  - colours: active beat, inactive beat
   - move regions? 
+
+SORT OF COMPLETE FEATURES
+  - adjust lights when sequence plays
+  - colours: active beat, inactive beat
   - adjust a note
+  - modify a region to adjust its form
+  - manage each region to a specific sequencer
 
 BUGS
   - modifying a clip should check for overlap
