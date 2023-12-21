@@ -62,7 +62,12 @@ function empty(){
 }
 
 function mode(){
+	var m = arrayfromargs(arguments);
 	//this.mode = val;
+	//sync.changeMode(m[0]);
+	
+	sync.changeMode(m[0]);
+	post(sync.mode);
 }
 
 
@@ -78,7 +83,7 @@ function SyncManager (){
 	this.padsDown = [];
 };
 
-SyncManager.prototype.input = function(c){
+SyncManager.prototype.input = function(c){ // c is a Cell object
 	if(this.mode === 0){ // entry mode - default
 		
 		if( c !== undefined ){
@@ -122,29 +127,48 @@ SyncManager.prototype.input = function(c){
 
             reset();
         }	
-            
+        //return;    
 	}
-	if(this.mode === 1){ // select mode
+	if(this.mode === 2){ // select mode
         for(var i = 0; i < thegrid.regions.length; i++){
             if(thegrid.regions[i].contains(c)){
                 post(i); /// TODO SELECT THE REGION OR SELECT THE CELL?
             }
         }
 	}
-	if(this.mode === 2){ // shift
+	if(this.mode === 1){ // shift mode
+		post('got some input');
+		post(c);
+		post(thegrid.regions.length);
+		post('\n');
 		for(var i = 0; i < thegrid.regions.length; i++){
-			if(thegrid.regions[i].contains(c)){
+			if(thegrid.regions[i].containsCell(c)){
+				post('kljlfjaf');
+				if(thegrid.regions[i].cellIndex !== undefined ){
+					post('lkjlkjdf');
+				}
 				var idx = thegrid.regions[i].cellIndex(c);
-				sequences[i].shift = idx;
-                // TODO 
+				post( idx );
+				
+				//sequences[i].shift = idx;
+				//sequences[i].vectorToMatches( sequences[i].vector );
+                //post( sequences[i].vector );
+				//post( sequences[i].vectorToMatches( sequences[i].vector ) );
+				
+				
+				// TODO 
                 // outlet(2, i);
                 // outlet(0, "shift", sequences[i].getMatches
+				
 				return;
 			}
 		}
 	}
 };
 
+SyncManager.prototype.changeMode = function(m){
+	this.mode = m; /// 0 sequence/create mode 1 shift mode 2 select mode
+};
 
 function OutputManager(){
 	this.shapes = []; // this is a cached version of the region shapes

@@ -15,16 +15,21 @@ Sequence.prototype.vectorToMatches = function(vector){
 
 	var sum = 0;
 	var myarray = []
+    var ratios = [];
 	for(var i = 0; i < vector.length; i++){
 		sum += vector[i];
+        for(var j = 0; j < vector[i]; j++){
+            ratios.push( 1 / (vector[i] * vector.length) );
+        }
 	}
 	
+    /// todo do I need to compute shift in this way here? 
 	var beatLength = 1 / vector.length;
-	
-	for(var i = 0; i < vector.length; i++){
-		for(var j = 0; j < vector[i]; j++){
-			myarray.push( i*beatLength + (beatLength / vector[i])*j );
-		}
+    var position = 0;
+	for(var i = 0; i < ratios.length; i++){
+        var index = (i + this.shift) % ratios.length;
+        myarray.push( position );
+        position += ratios[index];
 	}
     this.matches = myarray;
 
@@ -40,16 +45,8 @@ Sequence.prototype.vectorWithOriginToMatches = function(vectorWithOrigin){
     this.vectorToMatches(vectorWithOrigin);
 }
 
-Sequence.protoptype.getMatches = function(){
-    if( this.shift === 0 ){
+Sequence.prototype.getMatches = function(){
         return this.matches;
-    }else{
-        var shiftedarray = [];
-        for(var i = 0; i < this.matches.length; i++){
-            shiftedarray[i] = this.matches[ (i+this.shift) % this.matches.length];
-        }
-        return shiftedarray;
-    }
 };
 
 /*

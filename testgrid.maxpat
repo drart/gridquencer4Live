@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 62.0, 1607.0, 1024.0 ],
+		"rect" : [ 34.0, 62.0, 1216.0, 984.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,42 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-51",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 726.422763794660568, 162.601625919342041, 150.0, 47.0 ],
+					"text" : "this connection from 4 to celltopushnote is fishy\n"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-48",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 532.0, 191.0, 50.0, 22.0 ],
+					"text" : "compile"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-50",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 446.5, 104.0, 55.0, 22.0 ],
+					"text" : "mode $1"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"format" : 6,
 					"id" : "obj-46",
@@ -106,7 +142,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 801.0, 176.0, 50.0, 22.0 ],
-					"text" : "52 45"
+					"text" : "54 45"
 				}
 
 			}
@@ -410,7 +446,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 432.0, 446.0, 808.0, 486.0 ],
+						"rect" : [ 338.0, 232.0, 672.0, 675.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1508,7 +1544,7 @@
 					"fontname" : "Arial",
 					"fontsize" : 13.0,
 					"id" : "obj-133",
-					"items" : [ "AU DLS Synth 1", ",", "from Max 1", ",", "from Max 2" ],
+					"items" : [ "AU DLS Synth 1", ",", "IAC Driver Bus 1", ",", "from Max 1", ",", "from Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1538,7 +1574,7 @@
 					"fontname" : "Arial",
 					"fontsize" : 13.0,
 					"id" : "obj-127",
-					"items" : [ "to Max 1", ",", "to Max 2" ],
+					"items" : [ "IAC Driver Bus 1", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1683,7 +1719,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 978.0, 344.0, 204.0, 208.0 ],
+					"patching_rect" : [ 989.0, 355.0, 204.0, 208.0 ],
 					"text" : "sequence colours\ntuplet vs cross mode\nshift \nsequence rates\n\nmake a reset button?\ndelete a seqeunce \ndelete all sequences (and data?)\n\n\nslip and slop\n\ndisplaymanager\ngesture converter\nRegionSequenceMediator"
 				}
 
@@ -2376,6 +2412,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-50", 0 ],
+					"source" : [ "obj-11", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
 					"midpoints" : [ 1048.5, 148.94140625, 916.0, 148.94140625, 916.0, 5.94140625, 637.75, 5.94140625 ],
 					"source" : [ "obj-127", 1 ]
@@ -2790,6 +2833,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"source" : [ "obj-48", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-12", 2 ],
 					"order" : 2,
 					"source" : [ "obj-5", 0 ]
@@ -2817,6 +2867,13 @@
 					"destination" : [ "obj-7", 2 ],
 					"order" : 3,
 					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"source" : [ "obj-50", 0 ]
 				}
 
 			}

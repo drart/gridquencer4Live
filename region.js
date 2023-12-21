@@ -109,6 +109,19 @@ Region.prototype.containsCell = function(c){
 	return false;
 };
 
+// requires cell input
+Region.prototype.cellIndex = function(c){
+    if ( !this.containsCell(c) ){
+        return -1;
+    }
+
+    for(var i = 0; i < this.cells.length; i++){
+		if(c.x === this.cells[i].x && c.y === this.cells[i].y){
+			return i;
+		}
+    }
+};
+
 // regquires region input
 Region.prototype.doesOverlap = function(r){
 	for(var i = 0; i < r.cells.length; i++){
