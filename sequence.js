@@ -15,6 +15,29 @@ Sequence.prototype.vectorToMatches = function(vector){
 
 	var sum = 0;
 	var myarray = []
+	for(var i = 0; i < vector.length; i++){
+		sum += vector[i];
+	}
+	
+    /// todo do I need to compute shift in this way here? 
+	var beatLength = 1 / vector.length;
+	for(var i = 0; i < vector.length; i++){
+        for(var j = 0; j < vector[i]; j++){
+			myarray.push( i*beatLength + (beatLength / vector[i])*j );
+		}
+	}
+    // todo make api better rather than modifying internal state
+    this.matches = myarray;
+
+    return this.getMatches();
+};
+
+// this modifies the matches vector with the shift baked in
+Sequence.prototype.vectorToMatchesWithShift = function(vector){
+    this.vector = vector;
+
+	var sum = 0;
+	var myarray = []
     var ratios = [];
 	for(var i = 0; i < vector.length; i++){
 		sum += vector[i];
@@ -31,10 +54,14 @@ Sequence.prototype.vectorToMatches = function(vector){
         myarray.push( position );
         position += ratios[index];
 	}
+    // todo make api better rather than modifying internal state
     this.matches = myarray;
 
     return this.getMatches();
 };
+
+
+
 
 Sequence.prototype.vectorWithOriginToMatches = function(vectorWithOrigin){
     var orig = [vectorWithOrigin[0], vectorWithOrigin[1]];
@@ -48,6 +75,12 @@ Sequence.prototype.vectorWithOriginToMatches = function(vectorWithOrigin){
 Sequence.prototype.getMatches = function(){
         return this.matches;
 };
+
+
+Sequence.prototype.getSfhitedPhaseStart = function(){
+    return this.matches[this.shift];
+};
+
 
 /*
 var note = {

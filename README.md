@@ -15,16 +15,18 @@ TODO
   - phase shift a sequence
   - implement mode switching (sequence, shift, move, select, mute)
   - create a heuristics to apply to note generation
-  - use controlSurface API for connecting to Push instead of MIDI messages
   - load sequences from a track? 
   - Associate pads with note ids
   - Think about rests in a sequence 
   - move regions? 
+  - adjust a note
+  - use controlSurface API for connecting to Push instead of MIDI messages
+  - write sequences into ableton clips
+  - read clips into griquencer sequences
 
 SORT OF COMPLETE FEATURES
   - adjust lights when sequence plays
   - colours: active beat, inactive beat
-  - adjust a note
   - modify a region to adjust its form
   - manage each region to a specific sequencer
 

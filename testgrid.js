@@ -157,6 +157,8 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 				
 				
 				// TODO 
+                // message.unshift( 'shift' ); // add thing at the start of the message
+                // outlet(4, message);
                 // outlet(2, i);
                 // outlet(0, "shift", sequences[i].getMatches
 				
