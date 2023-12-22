@@ -31,16 +31,19 @@ function syncstep(val){ // voiceNumber, index
 	
 	var voiceIndex = a[0];
 	var r = thegrid.regions[voiceIndex];
-	var sequenceIndex = a[1]; //  + s[voiceIndex].shift TODO 
+	var sequenceIndex = a[1]; 
 	var previousIndex = sequenceIndex - 1;
 	if (previousIndex === -1){
 		previousIndex = r.cells.length - 1;
 	}
+
+    // var s = sequencer.sequences[voiceIndex];
 		
 	// current step highlight colour
     outlet(3, r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, "white");
 	// previous step sequence colour
-	outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, "blue");
+	outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, "blue"); // s.colour
+	//outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, s.colour); // 
 }
 
 function getCells(){
@@ -109,6 +112,14 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
             outlet(2, regionIndex);
             outlet(1, regionVector); 
 
+            //var message = [regionIndex];
+            //message.unshift('voice');
+            //outlet(0, message);
+            //message = [regionVector];
+            //message.unshift('shape');
+            //message = [sequencer.sequences[regionIndex].getMatches()];
+            //message.unshift('matches');
+
             ///// TODO put in other object
             ///////// vectoToMatches from sequence.js
             var sum = 0;
@@ -158,9 +169,6 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 				
 				// TODO 
                 // message.unshift( 'shift' ); // add thing at the start of the message
-                // outlet(4, message);
-                // outlet(2, i);
-                // outlet(0, "shift", sequences[i].getMatches
 				
 				return;
 			}
