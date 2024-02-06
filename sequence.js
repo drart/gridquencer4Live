@@ -33,8 +33,9 @@ Sequence.prototype.vectorToMatches = function(vector){
 };
 
 // this modifies the matches vector with the shift baked in
-Sequence.prototype.vectorToMatchesWithShift = function(vector){
-    this.vector = vector;
+Sequence.prototype.vectorToMatchesWithShift = function(){
+    //this.vector = vector;
+    var vector = this.vector;
 
 	var sum = 0;
 	var myarray = []
@@ -55,9 +56,9 @@ Sequence.prototype.vectorToMatchesWithShift = function(vector){
         position += ratios[index];
 	}
     // todo make api better rather than modifying internal state
-    this.matches = myarray;
+    //this.matches = myarray;
 
-    return this.getMatches();
+    return myarray;
 };
 
 

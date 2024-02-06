@@ -4,7 +4,7 @@ inlets = 1;
 // outlet 2 origin of the region // todo 
 // outlet 3 index of the region
 // outlet 4 cells to output manager
-outlets = 4;
+outlets = 5;
 
 var Cell = require("cell").Cell;
 var Region = require("region").Region;
@@ -18,6 +18,9 @@ var output = new OutputManager();
 
 var padsDown = [];
 var sequences = [];
+
+var colours = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet'];
+
 
 function list(){ // TODO x,y,z?
 	var a = arrayfromargs(arguments);
@@ -42,7 +45,8 @@ function syncstep(val){ // voiceNumber, index
 	// current step highlight colour
     outlet(3, r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, "white");
 	// previous step sequence colour
-	outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, "blue"); // s.colour
+	outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, colours[voiceIndex]); // s.colour
+	//outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, "blue"); // s.colour
 	//outlet(3, r.cells[previousIndex].x, r.cells[previousIndex].y, s.colour); // 
 }
 
@@ -154,22 +158,45 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 		post('\n');
 		for(var i = 0; i < thegrid.regions.length; i++){
 			if(thegrid.regions[i].containsCell(c)){
-				post('kljlfjaf');
+				post('cell is found');
+                /*
 				if(thegrid.regions[i].cellIndex !== undefined ){
 					post('lkjlkjdf');
 				}
-				var idx = thegrid.regions[i].cellIndex(c);
-				post( idx );
-				
-				//sequences[i].shift = idx;
-				//sequences[i].vectorToMatches( sequences[i].vector );
-                //post( sequences[i].vector );
-				//post( sequences[i].vectorToMatches( sequences[i].vector ) );
-				
-				
-				// TODO 
-                // message.unshift( 'shift' ); // add thing at the start of the message
-				
+                */
+				var shift = thegrid.regions[i].cellIndex(c);
+			    sequences[i].shift = shift; 
+                //post( sequences[i].shift );
+
+                // this is the desired functionality
+                //var myarray = sequences[i].vectorToMatchesWithShift();
+                //post(myarray);
+
+                var vector = thegrid.regions[i].toVector();
+
+                /////// taken from sequence.js
+                var sum = 0;
+                var myarray = []
+                var ratios = [];
+                for(var i = 0; i < vector.length; i++){
+                    sum += vector[i];
+                    for(var j = 0; j < vector[i]; j++){
+                        ratios.push( 1 / (vector[i] * vector.length) );
+                    }
+                }
+
+                /// todo do I need to compute shift in this way here?
+                var beatLength = 1 / vector.length;
+                var position = 0;
+                for(var i = 0; i < ratios.length; i++){
+                    var index = (i + shift) % ratios.length;
+                    myarray.push( position );
+                    position += ratios[index];
+                }
+                //////////////// end clip of sequence.js
+                post(myarray);
+
+                outlet(0, myarray)
 				return;
 			}
 		}
@@ -190,7 +217,8 @@ OutputManager.prototype.something = function(vectorWithOrigin, index){
 
 	if(this.shapes[index] === undefined){ // add region
         for(var i = 0 ; i < r.cells.length; i++){
-            var celllist = [r.cells[i].x, r.cells[i].y, "blue"];
+            //var celllist = [r.cells[i].x, r.cells[i].y, "blue"];
+            var celllist = [r.cells[i].x, r.cells[i].y,  colours[index] ];
             //var s = new Sequence();
             outlet(3, celllist);
         }
@@ -203,7 +231,7 @@ OutputManager.prototype.something = function(vectorWithOrigin, index){
                     for(var j = this.shapes[index][i]; j < vectorWithOrigin[i]; j++){
                         var x = vectorWithOrigin[0] + j;
                         var y = vectorWithOrigin[1] + i - 2;
-                        var celllist = [x, y, "blue"];
+                        var celllist = [x, y, colours[index]];
                         outlet(3, celllist);
                     }
                 }else{
