@@ -47,13 +47,3 @@ function pushNoteToCellPosition(note, velo){
 	//return position;
 	outlet(0, position);
 }
-
-function CellToPushNote(x, y, colour){
-	var note = y*8 + x + 36; 
-	var outputcolour = 3;
-	if(colour === 'blue'){
-		outputcolour = 45;
-	}
-	outlet(1, note, outputcolour);
-}
-

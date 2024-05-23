@@ -1,23 +1,44 @@
 var Cell = require("cell").Cell;
-// requires cell input (two!)
-function Region(firstPoint, secondPoint){
+// requires array of cells
+function Region(  arrayOfCells ){
 	this.type = "Region";
 	this.beats = 0; // int
 	this.cells = []; //Array of Cells
 
-	this.bottomLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
-	this.topRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
-	this.topLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
-	this.bottomRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
 
-	this.beats = 0;
-	for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
-		for(var j = this.bottomLeft.x; j <= this.bottomRight.x; j++){
-			var c = new Cell(j, i);
-			this.cells.push(c);
-		}
-		this.beats++;
-	} 
+	if( arrayOfCells.length === 1 ){
+		this.bottomLeft = new Cell( arrayOfCells[0].x, arrayOfCells[0].y );
+		this.topRight = new Cell( arrayOfCells[0].x, arrayOfCells[0].y );
+		this.bottomRight = new Cell( arrayOfCells[0].x, arrayOfCells[0].y );
+		this.bottomRight = new Cell( arrayOfCells[0].x, arrayOfCells[0].y );
+
+		this.beats = 1;
+
+		this.cells.push( new Cell( arrayOfCells[0].x, arrayOfCells[0].y ));
+	}
+
+	if( arrayOfCells.length === 2 ) {
+		var firstPoint = arrayOfCells[0];
+		var secondPoint = arrayOfCells[1];	
+		
+		this.bottomLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+		this.topRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+		this.topLeft = new Cell(Math.min(firstPoint.x, secondPoint.x), Math.max(firstPoint.y, secondPoint.y));
+		this.bottomRight = new Cell(Math.max(firstPoint.x, secondPoint.x), Math.min(firstPoint.y, secondPoint.y));
+
+		this.beats = 0;
+		for(var i = this.bottomLeft.y; i <= this.topLeft.y; i++){
+			for(var j = this.bottomLeft.x; j <= this.bottomRight.x; j++){
+				var c = new Cell(j, i);
+				this.cells.push(c);
+			}
+			this.beats++;
+		} 
+	}
+
+	if (arrayOfCells.length > 2 ) {
+
+	}
 };
 
 // requires region input

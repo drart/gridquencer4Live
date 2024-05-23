@@ -57,7 +57,7 @@ function getCells(){
 function reset(){
     // TODO
     if(padsDown.length === 1){ 
-		sync.input();
+		//sync.input();
     }
 	padsDown = [];
 }
@@ -97,12 +97,14 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 			padsDown.push(c);
 		}
 		
-        if(padsDown.length === 1){ // TODO distinct or wrap into next block?
-			c = padsDown[0]; // ?????
-        }
+//        if(padsDown.length === 1){ // TODO distinct or wrap into next block?
+//			c = padsDown[0]; // ?????
+//       }
         
-        if(padsDown.length === 2){
-            var r = new Region(padsDown[0], padsDown[1]);
+        if(padsDown.length === 2 || padsDown.length === 1){
+		var r = new Region(padsDown); 
+		post('lkjadlkfja');
+
             var resultingRegion = thegrid.addRegion(r);
             if(resultingRegion === undefined){
                 return;/// if region overlaps with another in a non-modifiable way then return
@@ -126,7 +128,7 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 
             ///// TODO put in other object
             ///////// vectoToMatches from sequence.js
-            var sum = 0;
+            // var sum = 0;
             var myarray = [];
             var beatLength = 1 / regionVector.length;
 	
