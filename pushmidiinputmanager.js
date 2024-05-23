@@ -1,4 +1,3 @@
-outlets = 2;
 /*
 //https://forum.ableton.com/viewtopic.php?t=192920
 BLACK = 0
@@ -33,7 +32,7 @@ VIOLET_LO = 55
 
 function pushNoteToCellPosition(note, velo){
 	if(velo == 0 ){
-		outlet(0, "reset");
+		outlet(0, "noteOff");
 		return;
 	}
 	

@@ -26,7 +26,9 @@ function list(){ // TODO x,y,z?
 	var a = arrayfromargs(arguments);
 	var c = new Cell(a[0], a[1]);
 	
-	sync.input(c);
+	//sync.input(c);
+	post('lkajdfkljaklfjakjfkajf');
+	padsDown.push( c );
 }
 
 function syncstep(val){ // voiceNumber, index
@@ -62,6 +64,12 @@ function reset(){
 	padsDown = [];
 }
 
+
+function noteOff(){
+	sync.input();
+	padsDown = [];
+}
+
 // bad idea?
 function empty(){
 	thegrid.cells = [];
@@ -77,7 +85,6 @@ function mode(){
 	post(sync.mode);
 }
 
-
 function delete(index){
 	// empty padsdown
 	// empty sequences
@@ -92,10 +99,11 @@ function SyncManager (){
 
 SyncManager.prototype.input = function(c){ // c is a Cell object
 	if(this.mode === 0){ // entry mode - default
-		
+	/*	
 		if( c !== undefined ){
 			padsDown.push(c);
 		}
+	*/
 		
 //        if(padsDown.length === 1){ // TODO distinct or wrap into next block?
 //			c = padsDown[0]; // ?????
