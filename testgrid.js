@@ -1,6 +1,6 @@
 // inlet takees list of x,y positions and sync x, y 
 inlets = 1;
-// outlet 1 gives the vector representation of a region
+// outlet 1 gives the vector representation of a region in what~ format normalized between 0-1
 // outlet 2 origin of the region // todo 
 // outlet 3 index of the region
 // outlet 4 cells to output manager
@@ -26,8 +26,13 @@ function list(){ // TODO x,y,z?
 	var a = arrayfromargs(arguments);
 	var c = new Cell(a[0], a[1]);
 	
+	
+	if(sync.mode === 1){
+		sync.input(c);
+		return;
+	}
 	//sync.input(c);
-	post('lkajdfkljaklfjakjfkajf');
+	//post('lkajdfkljaklfjakjfkajf');
 	padsDown.push( c );
 }
 
@@ -66,8 +71,11 @@ function reset(){
 
 
 function noteOff(){
-	sync.input();
-	padsDown = [];
+
+	if(sync.mode === 0){
+		sync.input();
+		padsDown = [];
+	}
 }
 
 // bad idea?
@@ -110,10 +118,11 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 //       }
         
         if(padsDown.length === 2 || padsDown.length === 1){
-		var r = new Region(padsDown); 
-		post('lkjadlkfja');
-
-            var resultingRegion = thegrid.addRegion(r);
+			post('new region with 1 or two touches');
+			
+			var r = new Region(padsDown); 
+            
+			var resultingRegion = thegrid.addRegion(r);
             if(resultingRegion === undefined){
                 return;/// if region overlaps with another in a non-modifiable way then return
             }
@@ -145,7 +154,9 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
                     myarray.push( i*beatLength + (beatLength / regionVector[i])*j );
                 }
             }
-            sequences[regionIndex] = myarray;
+            sequences[regionIndex] = new Sequence();
+			sequences[regionIndex].vectorToMatches( regionVector );
+			post( regionIndex );
             outlet(0, myarray);
             //// end vectorToMatches
             //////// 
@@ -162,52 +173,19 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
         }
 	}
 	if(this.mode === 1){ // shift mode
-		post('got some input');
-		post(c);
-		post(thegrid.regions.length);
-		post('\n');
 		for(var i = 0; i < thegrid.regions.length; i++){
+			post('checking grid for cell');
 			if(thegrid.regions[i].containsCell(c)){
-				post('cell is found');
-                /*
-				if(thegrid.regions[i].cellIndex !== undefined ){
-					post('lkjlkjdf');
-				}
-                */
 				var shift = thegrid.regions[i].cellIndex(c);
-			    sequences[i].shift = shift; 
-                //post( sequences[i].shift );
-
-                // this is the desired functionality
-                //var myarray = sequences[i].vectorToMatchesWithShift();
-                //post(myarray);
-
-                var vector = thegrid.regions[i].toVector();
-
-                /////// taken from sequence.js
-                var sum = 0;
-                var myarray = []
-                var ratios = [];
-                for(var i = 0; i < vector.length; i++){
-                    sum += vector[i];
-                    for(var j = 0; j < vector[i]; j++){
-                        ratios.push( 1 / (vector[i] * vector.length) );
-                    }
-                }
-
-                /// todo do I need to compute shift in this way here?
-                var beatLength = 1 / vector.length;
-                var position = 0;
-                for(var i = 0; i < ratios.length; i++){
-                    var index = (i + shift) % ratios.length;
-                    myarray.push( position );
-                    position += ratios[index];
-                }
-                //////////////// end clip of sequence.js
-                post(myarray);
-
-                outlet(0, myarray)
-				return;
+				var phaseshift = sequences[i].getMatches()[shift];
+			
+				post("the shift is: ");
+				post( shift );
+				post( phaseshift );
+				post("\n")
+				
+				outlet(2, i); // regionIndex to address voice
+				outlet( 4, phaseshift );
 			}
 		}
 	}

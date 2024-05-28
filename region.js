@@ -17,7 +17,7 @@ function Region(  arrayOfCells ){
 		this.cells.push( new Cell( arrayOfCells[0].x, arrayOfCells[0].y ));
 	}
 
-	if( arrayOfCells.length === 2 ) {
+	if( arrayOfCells.length === 2 ) { // todo sort bottom to top
 		var firstPoint = arrayOfCells[0];
 		var secondPoint = arrayOfCells[1];	
 		
@@ -37,7 +37,36 @@ function Region(  arrayOfCells ){
 	}
 
 	if (arrayOfCells.length > 2 ) {
+		// sort cells from bottom to top
+		// find leftmost cell
+		// todo check to see if there are two touches on a line
 
+		// sort cells from bottom to top
+		arrayOfCells.sort( function(a,b){
+			return a.y - b.y;
+		})
+		// find leftmost cell
+		var leftmost = arrayOfCells[0].x;
+		for( var i = 1; i < arrayOfCells.length; i++){
+			if( arrayOfCells[i].x < leftmost ){
+				leftmost = arrayOfCells[i].x;
+			}
+		}
+
+		var currentcell = arrayOfCells[0];
+		var currentcellindex = 0;
+		for( var y = arrayOfCells[0].y; y <= arrayOfCells[arrayOfCells.length-1].y; y++){
+			if ( y != currentcell.y ){
+				currentcellindex++;
+				currentcell = arrayOfCells[ currentcellindex ];
+			}
+			for( var x = leftmost; x <= currentcell.x; x++){
+				var c = new Cell( x, y );
+				this.cells.push( c );
+			}
+		}
+
+		this.beats = arrayOfCells[ arrayOfCells.length -1 ].y - arrayOfCells[0].y + 1;
 	}
 };
 
