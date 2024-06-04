@@ -1,17 +1,15 @@
-function Cell(x, y){
-    this.type = "Cell";
-	this.x = x;
-	this.y = y;	
+class Cell{
+	constructor(x, y) {
+		this.type = "Cell";
+		this.x = x;
+		this.y = y;	
+	}
 	//this.midinote;
-};
 
-Cell.prototype.equals = function(other){
-	if (this.y === other.y && this.x === other.x) return true;
-
-	return false;
-};
-
-exports.Cell = Cell;
+	equals (other){
+		if (this.y === other.y && this.x === other.x) return true;
+			return false;
+	};
 
 /*
 exports.Cell.prototype.fromMIDINote = function(midinote){
@@ -24,3 +22,6 @@ exports.Cell.prototype.toMIDINote = function(){
 };
 */
 
+};
+
+export { Cell };
