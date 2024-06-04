@@ -107,16 +107,6 @@ function SyncManager (){
 
 SyncManager.prototype.input = function(c){ // c is a Cell object
 	if(this.mode === 0){ // entry mode - default
-	/*	
-		if( c !== undefined ){
-			padsDown.push(c);
-		}
-	*/
-		
-//        if(padsDown.length === 1){ // TODO distinct or wrap into next block?
-//			c = padsDown[0]; // ?????
-//       }
-        
         if(padsDown.length === 2 || padsDown.length === 1){
 			post('new region with 1 or two touches');
 			
@@ -163,7 +153,22 @@ SyncManager.prototype.input = function(c){ // c is a Cell object
 
             reset();
         }	
-        //return;    
+        if(padsDown.length > 2){
+			post('region with more than 2 touches');
+			var r = new Region(padsDown);
+				
+				
+			var resultingRegion = thegrid.addRegion(r);
+            if(resultingRegion === undefined){
+                return;/// if region overlaps with another in a non-modifiable way then return
+            }
+			post('here');
+
+            var regionVector = resultingRegion.toVector();
+			post( regionVector );
+  
+				
+		}
 	}
 	if(this.mode === 2){ // select mode
         for(var i = 0; i < thegrid.regions.length; i++){
