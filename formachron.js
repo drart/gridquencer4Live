@@ -83,11 +83,63 @@ class SyncManager {
 	}
 }
 
-var thegrid = new Grid();
+class OutputManager{
+	constructor( g ){
+		this.shapes = []; // this is a cached version of the region shapes
+		this.grid = g;
+	}
 
+	process( vectorWithOrigin, index ){
+
+		var r = this.grid.regions[index];
+
+		if(this.shapes[index] === undefined){ // add region
+			for(var i = 0 ; i < r.cells.length; i++){
+				var celllist = [r.cells[i].x, r.cells[i].y,  colours[index] ];
+				// TODO 
+				//outlet(3, celllist);
+			}
+		}else{ // modify the region
+			var c = new Cell(vectorWithOrigin[0], vectorWithOrigin[1]);
+			for(var i = 2; i < vectorWithOrigin.length; i++){
+
+				if(vectorWithOrigin[i] !== this.shapes[index][i]){
+					if(vectorWithOrigin[i] > this.shapes[index][i]){
+						for(var j = this.shapes[index][i]; j < vectorWithOrigin[i]; j++){
+							var x = vectorWithOrigin[0] + j;
+							var y = vectorWithOrigin[1] + i - 2;
+							var celllist = [x, y, colours[index]];
+							// TODO
+							//outlet(3, celllist);
+						}
+					}else{
+						for(var j = vectorWithOrigin[i]; j < this.shapes[index][i]; j++){
+							var x = vectorWithOrigin[0] + j;
+							var y = vectorWithOrigin[1] + i - 2;
+							var celllist = [x, y, "grey"];
+							// TODO - also set this to 0? 
+							//outlet(3, celllist);
+						}
+					}
+				}
+			}
+		}
+
+		this.shapes[index] = vectorWithOrigin;
+	}
+}
+
+
+var thegrid = new Grid();
 var sync = new SyncManager( thegrid );
-//var output = new OutputManager();
+var output = new OutputManager( thegrid );
 var sequences = [];
+
+/// send startup message to clear grid and sequencer
+for( var i = 0; i < 8; i++) {
+	Max.outlet('setVoice', i );
+	Max.outlet('what');
+}
 
 // get midi input 
 Max.addHandler("note", (n,v) => {
@@ -112,9 +164,23 @@ Max.addHandler("control", (cc, val) => {
 /// get voice and index from sequencer and prepare MIDI for hardware display
 Max.addHandler("syncstep", (voiceNumber, sequenceIndex) => {
 	var r = thegrid.regions[ voiceNumber ];
+	//console.log( r );
 
-	// output midi for current step
-	// output midi for previous step
+	var previousIndex = sequenceIndex - 1;
+	if (previousIndex === -1 ){
+		previousIndex = r.cells.length - 1; // todo bodge
+	}
 
-	Max.outlet('something', voiceNumber, sequenceIndex);
+	Max.outlet( 'outlet', r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
+	Max.outlet( 'outlet', r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[sequenceIndex]);
+});
+
+Max.addHandler("mode", m => {
+	//sync.mode( m );
+});
+
+
+Max.addHandler("remove", i => {
+	Max.outlet('setVoice', i );
+	Max.outlet('what');	
 });
