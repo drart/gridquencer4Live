@@ -141,6 +141,15 @@ for( var i = 0; i < 8; i++) {
 	Max.outlet('what');
 }
 
+var results = initAbletonPush1();
+
+console.log( results );
+
+for ( m of results ){
+	Max.outlet('midi-output', m );
+}
+
+
 // get midi input 
 Max.addHandler("note", (n,v) => {
 	var c;
@@ -162,17 +171,25 @@ Max.addHandler("control", (cc, val) => {
 });
 
 /// get voice and index from sequencer and prepare MIDI for hardware display
-Max.addHandler("syncstep", (voiceNumber, sequenceIndex) => {
+Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
+	console.log( voiceNumber );
 	var r = thegrid.regions[ voiceNumber ];
-	//console.log( r );
 
+	console.log( r );
 	var previousIndex = sequenceIndex - 1;
 	if (previousIndex === -1 ){
 		previousIndex = r.cells.length - 1; // todo bodge
 	}
+	console.log('ljaldkfja');
 
 	Max.outlet( 'outlet', r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
-	Max.outlet( 'outlet', r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[sequenceIndex]);
+	Max.outlet( 'outlet', r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber]);
+	
+	currentNote  = 	CellToPushNote( r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
+	previousNote = 	CellToPushNote(  r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber] );
+	
+	Max.outlet('midi-output', [144, previousNote[0], previousNote[1] ]);
+	Max.outlet('midi-output', [144, currentNote[0],  currentNote[1]  ]);
 });
 
 Max.addHandler("mode", m => {
@@ -184,3 +201,63 @@ Max.addHandler("remove", i => {
 	Max.outlet('setVoice', i );
 	Max.outlet('what');	
 });
+
+function initAbletonPush1(){
+		var msg = [];
+		var cc = 176;
+		var note = 144;
+		
+		var messages = [];
+		var ccs = [36, 37, 38, 39, 40, 41, 42, 43, 85, 49, 50, 85 ];
+		
+		
+		for( let i = 0; i < 64; i++){
+			msg[0] = note;
+			msg[1] = 36 + i;
+			msg[2] = 0;
+			messages.push( [...msg] );
+		}
+		
+		for( let i = 0; i < ccs.length; i++){
+			msg[0] = cc;
+			msg[1] = ccs[i];
+			msg[2] = 1;
+			messages.push( [...msg])
+		}
+		
+		return messages;
+}
+
+
+function CellToPushNote(x, y, colour){
+	var note = y*8 + x + 36; 
+	var outputcolour = 3;
+	switch(colour){
+		case 'white':
+			outputcolour = 3;
+			break;
+		case 'red': 
+			outputcolour = 120;
+			break;
+		case 'orange':
+			outputcolour = 60;
+			break;
+		case 'yellow':
+			outputcolour = 13;
+			break;
+		case 'green':
+			outputcolour = 21;
+			break;
+		case 'cyan':
+			outputcolour = 33;
+		case 'blue':
+			outputcolour = 45;
+			break;
+		case 'indigo':
+			outputcolour = 49;
+		default:
+			break;
+	}
+	
+	return( [note, outputcolour] );
+}
