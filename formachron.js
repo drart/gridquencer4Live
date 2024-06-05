@@ -39,7 +39,9 @@ class SyncManager {
 				Max.outlet( 'createSequence', ...regionVector );
 
 				sequences[regionIndex] = new Sequence();
-				var whatindices = sequences[regionIndex].vectorToMatches( regionVector );
+				sequences[regionIndex].setVector( regionVector );
+				//console.log( sequences[regionIndex] );
+				var whatindices = sequences[regionIndex].getMatches();
 				Max.outlet( 'what', ...whatindices );
 				
 				this.clear();
@@ -59,7 +61,7 @@ class SyncManager {
 		if(this.mode === 1){ // shift mode
 			for(var i = 0; i < thegrid.regions.length; i++){
 				console.log('checking grid for cell');
-				if(thegrid.regions[i].containsCell(c)){
+				if(this.grid.regions[i].containsCell(c)){
 					var shift = thegrid.regions[i].cellIndex(c);
 					var phaseshift = sequences[i].getMatches()[shift];
 
@@ -70,9 +72,28 @@ class SyncManager {
 				}
 			}
 		}
+		if(this.mode === 3){ // mute mode
+			var c = this.padsDown[0]; // todo fix 
+			for( var i = 0; i < this.grid.regions.length; i++){
+				if(this.grid.regions[i].containsCell(c)){
+
+					let index = this.grid.regions[i].cellIndex( c ) ;
+					if( sequences[i].getProbability( index ) === 0 ){
+						sequences[i].setProbability( index, 1 );
+					}else{
+						sequences[i].setProbability( index, 0 );
+					}
+					var probs = sequences[i].getProbabilities();
+					Max.outlet('setVoice', i );
+					Max.outlet('prob', ...probs );
+					this.clear();// todo fix
+					return;
+				}
+			}
+		}
 	}
 	
-	changeMode ( m ){
+	setMode ( m ){
 		this.mode = m;
 	}	
 	clear (){
@@ -143,8 +164,6 @@ for( var i = 0; i < 8; i++) {
 
 var results = initAbletonPush1();
 
-console.log( results );
-
 for ( m of results ){
 	Max.outlet('midi-output', m );
 }
@@ -154,7 +173,7 @@ for ( m of results ){
 Max.addHandler("note", (n,v) => {
 	var c;
 	if( v === 0 ){
-		var result = sync.input();
+		var result = sync.input(); // could be undefined
 		// TODO 
 		// outputmanager.process( result );
 		console.log( result );
@@ -172,15 +191,12 @@ Max.addHandler("control", (cc, val) => {
 
 /// get voice and index from sequencer and prepare MIDI for hardware display
 Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
-	console.log( voiceNumber );
 	var r = thegrid.regions[ voiceNumber ];
 
-	console.log( r );
 	var previousIndex = sequenceIndex - 1;
 	if (previousIndex === -1 ){
 		previousIndex = r.cells.length - 1; // todo bodge
 	}
-	console.log('ljaldkfja');
 
 	Max.outlet( 'outlet', r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
 	Max.outlet( 'outlet', r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber]);
@@ -193,7 +209,8 @@ Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
 });
 
 Max.addHandler("mode", m => {
-	//sync.mode( m );
+	sync.setMode( m );
+	console.log( sync.mode) ;
 });
 
 
