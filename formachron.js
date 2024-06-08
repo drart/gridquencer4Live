@@ -18,8 +18,8 @@ class SyncManager {
 		this.grid = g;
 	}
 	
-	input( c ){
-		console.log( "sync input is: " + c );
+	input( c ){ // c is often called with undefined
+		//console.log( "sync input is: " + c );
 		if(this.mode === 0){ // entry mode - default
 			if(this.padsDown.length === 2 || this.padsDown.length === 1){
 				console.log('new region with 1 or two touches');
@@ -59,6 +59,7 @@ class SyncManager {
 		}
 		*/
 		if(this.mode === 1){ // shift mode
+			var c = this.padsDown[0]; // TODO fix to get the input from sync call
 			for(var i = 0; i < thegrid.regions.length; i++){
 				console.log('checking grid for cell');
 				if(this.grid.regions[i].containsCell(c)){
@@ -68,6 +69,17 @@ class SyncManager {
 					console.log("the shift is: " + shift + " " + phaseshift);
 					Max.outlet( 'setVoice', i );
 					Max.outlet( 'phaseShift', phaseshift );
+					
+					/*
+					// send out shift index
+					let vec = sequences[i].getVector();
+					Max.outlet('sequenceBeats', vec.length);
+					let sum = 0; 
+					for( let k = 0; k < vec.length; k++){
+						sum += vec[k];
+					}
+					Max.outlet('sequenceEvents');
+					*/
 					return;
 				}
 			}
@@ -110,17 +122,38 @@ class OutputManager{
 		this.grid = g;
 	}
 
-	process( vectorWithOrigin, index ){
+	process( args ){ // todo fix the return from syncmanager
+
+		var index = args.pop();
+		var vectorWithOrigin = args;
+
+		console.log ( 'the args to process are: ' + args );
+		console.log( 'the index is: ' + index );
+
+		/*
+		/// there is a problem with this bit
+		if( vectorWithOrigin  === undefined ){
+			console.log('doing nothing in output manager');
+			return;
+		}
+		*/
 
 		var r = this.grid.regions[index];
+		console.log( r );
+
 
 		if(this.shapes[index] === undefined){ // add region
+			console.log('create a vector region' );
 			for(var i = 0 ; i < r.cells.length; i++){
 				var celllist = [r.cells[i].x, r.cells[i].y,  colours[index] ];
 				// TODO 
-				//outlet(3, celllist);
+				var data = CellToPushNote( r.cells[i].x, r.cells[i].y, colours[index] );
+				var msg = [ 144, data[0], data[1] ];
+				console.log( msg );
+				Max.outlet('midi-output', msg);
 			}
 		}else{ // modify the region
+			console.log('modify a region' );
 			var c = new Cell(vectorWithOrigin[0], vectorWithOrigin[1]);
 			for(var i = 2; i < vectorWithOrigin.length; i++){
 
@@ -131,15 +164,20 @@ class OutputManager{
 							var y = vectorWithOrigin[1] + i - 2;
 							var celllist = [x, y, colours[index]];
 							// TODO
-							//outlet(3, celllist);
+
+							var msg = CellToPushNote( x, y, colours[index] );
+							Max.outlet('midi-output', msg);
 						}
 					}else{
 						for(var j = vectorWithOrigin[i]; j < this.shapes[index][i]; j++){
 							var x = vectorWithOrigin[0] + j;
 							var y = vectorWithOrigin[1] + i - 2;
-							var celllist = [x, y, "grey"];
+							var celllist = [x, y, 0];
+							var msg = CellToPushNote( x, y, colours[index] );
+							msg[2] = 0;
 							// TODO - also set this to 0? 
 							//outlet(3, celllist);
+							Max.outlet('midi-output', msg);
 						}
 					}
 				}
@@ -171,16 +209,22 @@ for ( m of results ){
 
 // get midi input 
 Max.addHandler("note", (n,v) => {
+	
+	if ( n > 99 || n < 36){
+		console.log('note out of range');
+		return;
+	}
 	var c;
 	if( v === 0 ){
+		console.log('note off');
 		var result = sync.input(); // could be undefined
 		// TODO 
-		// outputmanager.process( result );
-		console.log( result );
+		//output.process( result );
 	}else{
 		c = new (Cell);
 		c.x = (n - 36) % 8;
 		c.y = Math.floor(( n - 36 ) / 8 );
+		console.log(c);
 		sync.push( c );
 	}
 });
