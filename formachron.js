@@ -74,14 +74,22 @@ Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
         return;
     }
 
-	Max.outlet( 'outlet', r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
-	Max.outlet( 'outlet', r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber]);
+    //console.log('call mediator sync');
+    var messages = mediator.sync( voiceNumber, sequenceIndex ); 
+    for( var i = 0; i < messages.length; i++){
+        //console.log( messages[i] );
+        Max.outlet( messages[i].channel, messages[i].data ); 
+        //console.log('lkajsdflkjaklfja');
+    }
+
 	
+    /*
 	currentNote  = 	CellToPushNote( r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
 	previousNote = 	CellToPushNote(  r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber] );
 	
 	Max.outlet('midi-output', [144, previousNote[0], previousNote[1] ]);
 	Max.outlet('midi-output', [144, currentNote[0],  currentNote[1]  ]);
+    */
 });
 
 Max.addHandler("mode", m => {
@@ -119,6 +127,8 @@ function initAbletonPush1(){
 		return messages;
 }
 
+
+// todo put this in the mediator
 function CellToPushNote(x, y, colour){
 	var note = y*8 + x + 36; 
 	var outputcolour = 3;

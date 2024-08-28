@@ -2121,10 +2121,10 @@
 														"maxclass" : "newobj",
 														"text" : "*",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 54.5, 353.0, 29.5, 22.0 ],
-														"numinlets" : 2,
-														"id" : "obj-12"
+														"outlettype" : [ "" ],
+														"id" : "obj-12",
+														"numinlets" : 2
 													}
 
 												}
@@ -2133,10 +2133,10 @@
 														"maxclass" : "newobj",
 														"text" : ">",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 76.0, 253.0, 29.5, 22.0 ],
-														"numinlets" : 2,
-														"id" : "obj-10"
+														"outlettype" : [ "" ],
+														"id" : "obj-10",
+														"numinlets" : 2
 													}
 
 												}
@@ -2145,10 +2145,10 @@
 														"maxclass" : "newobj",
 														"text" : "in 2",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 159.0, 29.0, 28.0, 22.0 ],
-														"numinlets" : 0,
-														"id" : "obj-9"
+														"outlettype" : [ "" ],
+														"id" : "obj-9",
+														"numinlets" : 0
 													}
 
 												}
@@ -2157,10 +2157,10 @@
 														"maxclass" : "newobj",
 														"text" : "sah",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 98.0, 210.0, 40.0, 22.0 ],
-														"numinlets" : 3,
-														"id" : "obj-8"
+														"outlettype" : [ "" ],
+														"id" : "obj-8",
+														"numinlets" : 3
 													}
 
 												}
@@ -2169,10 +2169,10 @@
 														"maxclass" : "newobj",
 														"text" : "+ 0.5",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 179.0, 169.0, 36.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-7"
+														"outlettype" : [ "" ],
+														"id" : "obj-7",
+														"numinlets" : 1
 													}
 
 												}
@@ -2181,10 +2181,10 @@
 														"maxclass" : "newobj",
 														"text" : "* 0.5",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 179.0, 139.0, 33.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-6"
+														"outlettype" : [ "" ],
+														"id" : "obj-6",
+														"numinlets" : 1
 													}
 
 												}
@@ -2193,10 +2193,10 @@
 														"maxclass" : "newobj",
 														"text" : "noise",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 179.0, 111.0, 37.0, 22.0 ],
-														"numinlets" : 0,
-														"id" : "obj-5"
+														"outlettype" : [ "" ],
+														"id" : "obj-5",
+														"numinlets" : 0
 													}
 
 												}
@@ -2205,10 +2205,10 @@
 														"maxclass" : "newobj",
 														"text" : "in 1",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 65.0, 29.0, 28.0, 22.0 ],
-														"numinlets" : 0,
-														"id" : "obj-16"
+														"outlettype" : [ "" ],
+														"id" : "obj-16",
+														"numinlets" : 0
 													}
 
 												}
@@ -2218,8 +2218,8 @@
 														"text" : "out 1",
 														"numoutlets" : 0,
 														"patching_rect" : [ 54.5, 386.0, 35.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-17"
+														"id" : "obj-17",
+														"numinlets" : 1
 													}
 
 												}
@@ -2301,7 +2301,7 @@
 									"outlettype" : [ "multichannelsignal" ],
 									"patching_rect" : [ 117.0, 606.0, 55.0, 22.0 ],
 									"text" : "mc.gen~",
-									"wrapper_uniquekey" : "u857000495"
+									"wrapper_uniquekey" : "u994005532"
 								}
 
 							}
@@ -2807,10 +2807,10 @@
 																		"maxclass" : "newobj",
 																		"text" : "< 2048",
 																		"numoutlets" : 1,
-																		"outlettype" : [ "" ],
 																		"patching_rect" : [ 256.0, 229.0, 46.0, 22.0 ],
-																		"numinlets" : 1,
-																		"id" : "obj-10"
+																		"outlettype" : [ "" ],
+																		"id" : "obj-10",
+																		"numinlets" : 1
 																	}
 
 																}
@@ -2819,10 +2819,10 @@
 																		"maxclass" : "newobj",
 																		"text" : "1",
 																		"numoutlets" : 1,
-																		"outlettype" : [ "" ],
 																		"patching_rect" : [ 252.0, 137.0, 19.0, 22.0 ],
-																		"numinlets" : 0,
-																		"id" : "obj-9"
+																		"outlettype" : [ "" ],
+																		"id" : "obj-9",
+																		"numinlets" : 0
 																	}
 
 																}
@@ -2831,10 +2831,10 @@
 																		"maxclass" : "newobj",
 																		"text" : "counter",
 																		"numoutlets" : 3,
-																		"outlettype" : [ "", "", "" ],
 																		"patching_rect" : [ 252.0, 192.0, 49.0, 22.0 ],
-																		"numinlets" : 3,
-																		"id" : "obj-7"
+																		"outlettype" : [ "", "", "" ],
+																		"id" : "obj-7",
+																		"numinlets" : 3
 																	}
 
 																}
@@ -2843,10 +2843,10 @@
 																		"maxclass" : "newobj",
 																		"text" : "== 1",
 																		"numoutlets" : 1,
-																		"outlettype" : [ "" ],
 																		"patching_rect" : [ 175.0, 143.0, 33.0, 22.0 ],
-																		"numinlets" : 1,
-																		"id" : "obj-6"
+																		"outlettype" : [ "" ],
+																		"id" : "obj-6",
+																		"numinlets" : 1
 																	}
 
 																}
@@ -2855,10 +2855,10 @@
 																		"maxclass" : "newobj",
 																		"text" : "in 1",
 																		"numoutlets" : 1,
-																		"outlettype" : [ "" ],
 																		"patching_rect" : [ 175.0, 35.0, 28.0, 22.0 ],
-																		"numinlets" : 0,
-																		"id" : "obj-5"
+																		"outlettype" : [ "" ],
+																		"id" : "obj-5",
+																		"numinlets" : 0
 																	}
 
 																}
@@ -2868,8 +2868,8 @@
 																		"text" : "out 1",
 																		"numoutlets" : 0,
 																		"patching_rect" : [ 174.0, 352.0, 35.0, 22.0 ],
-																		"numinlets" : 1,
-																		"id" : "obj-8"
+																		"id" : "obj-8",
+																		"numinlets" : 1
 																	}
 
 																}
@@ -2921,7 +2921,7 @@
 													"outlettype" : [ "multichannelsignal" ],
 													"patching_rect" : [ 383.0, 631.0, 156.0, 22.0 ],
 													"text" : "mc.gen~ @title trigger2gate",
-													"wrapper_uniquekey" : "u628000521"
+													"wrapper_uniquekey" : "u996014829"
 												}
 
 											}
@@ -3051,7 +3051,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 2,
 													"outlettype" : [ "signal", "signal" ],
-													"patching_rect" : [ 110.0, 480.0, 74.0, 22.0 ],
+													"patching_rect" : [ 80.0, 474.0, 74.0, 22.0 ],
 													"text" : "mc.unpack~"
 												}
 
@@ -3152,7 +3152,7 @@
 															"version" : 1,
 															"isbank" : 0,
 															"isbase64" : 1,
-															"blob" : "2111.hAGaoMGcv.S1AHv.DTfAGfPBJr.CTTgEWfQFb0VXtUmYgMFc0IWYxQEYgQWXbUFak0VYtQWKtEVak8EDPLzatQmbuwFakIGHSQWXzU1UyUmXzkGbkckckI2bo8laTQWdvUFUtEVak8EDO.kbuMVYyM2axAxTzEFckIQSLI1bOEAArC..............bB....vO.B......A3CSL2L...f.9PlK+A...LfOru4+....D7Cf......PA+.H......b..........H.........PB+........nvO........K7C........C.........z..........N7C.......vC+.........wO........Q.........fD.........LwO........T7C.......PE+........XA.........W..........F+........jwO........Z7C.......vF.........vA.........c.........fG.........7A.........f.........PH.........HB.........i..........I.........TB.........l.........vI.........fB.........o.........fJ.........rB.........r.........PK.........3B.........u..........L.........DC.........x.........vL.........PC.........0.........fM.........bC.........3.........PN.........nC.........6..........O.........zC.........9.........vO..........D.........AA........fP.........LD.........DA........PQ.........XD.........GA.........R.........jD.........JA........vR.........vD.........MA........fS.........7D.........PA........PT.........HE.........SA.........U.........TE.........VA........vU.........fE.........YA........fV.........rE.........bA........PW.........3E.........eA.........X.........DF.........hA........vX.........PF.........kA........fY.........bF.........nA........PZ.........nF.........qA.........a.........zF.........tA........va..........G.........wA........fb.........LG.........zA........Pc.........XG.........2A.........d.........jG.........5A........vd.........vG.........8A........fe.........7G..........B........Pf.........HH.........CB.........g.........TH.........FB........vg.........fH.........IB........fh.........rH.........LB........Pi.........3H.........OB.........j.........DI.........RB........vj.........PI.........UB........fk.........bI.........XB........Pl.........nI.........aB.........m.....HcCN7fDQESTxDMDQDELYMEckIWYuARRtEMDSn0TzUlbk8FHOUGcOEQ.Oub...fC.........rb.........PEA..LWZ5U1KrUVXx41Kg01a04FcFQ.........TQ...ykldk8BakElbt8xbuUmbiUFSD.........kD...YkMVX48BakElbt8RXs8VctQmQD.........kD...YkMVX48BakElbt8xbuUmbiUFSD.........UD...cu4VYuvVYgImauDVauUmazYDA........PEA..P2atU1KrUVXx41Ky8VcxMVYLQ.........TP...skFduvVYgImauDVauUmazYDA........PAA..zVZ38BakElbt8xbuUmbiUFSD.........EF..PZtAWcz8EakYWYr8BakElbt8RXs8VctQmQD.........EF..PZtAWcz8EakYWYr8BakElbt8xbuUmbiUFSD.........UF..va0QGb0Q2WrUlckw1KrUVXx41Kg01a04FcFQ.........TY...uUGcvUGcewVY1UFauvVYgImauL2a0I2XkwDA........Pk...XWZkc2Wykldk0DB..f.....A....D.......PCQ...WCAUC..vX0Imbk4FceAWXzMFZTc...PVYlEVcrQmDAYmbx.A.RDVcsYFVU4FcoQGakQ1SPvF...hPl7tv+LH2mOz+axtO.....A....D...................3O...f+....................9C...3O...................f+....9C...................3O...f+.......H.vF.fB.s.fN.zD.UAPW.HF.mAPd.3WAtUvbETWA2UfdEvWAFVPhEP4Amc.aG31Ayc.e........BD..........Z...................GrN"
+															"blob" : "2111.hAGaoMGcv.S1AHv.DTfAGfPBJr.CTTgEWfQFb0VXtUmYgMFc0IWYxQEYgQWXbUFak0VYtQWKtEVak8EDPLzatQmbuwFakIGHSQWXzU1UyUmXzkGbkckckI2bo8laTQWdvUFUtEVak8EDO.kbuMVYyM2axAxTzEFckIQSLI1bOEAArC..............bB....vO+viF....A3C17+E...f.+TBbwB...LfOTKhF....D7Cf......PA+.H......b..........H.........PB+........nvO........K7C........C.........z..........N7C.......vC+.........wO........Q.........fD.........LwO........T7C.......PE+........XA.........W..........F+........jwO........Z7C.......vF.........vA.........c.........fG.........7A.........f.........PH.........HB.........i..........I.........TB.........l.........vI.........fB.........o.........fJ.........rB.........r.........PK.........3B.........u..........L.........DC.........x.........vL.........PC.........0.........fM.........bC.........3.........PN.........nC.........6..........O.........zC.........9.........vO..........D.........AA........fP.........LD.........DA........PQ.........XD.........GA.........R.........jD.........JA........vR.........vD.........MA........fS.........7D.........PA........PT.........HE.........SA.........U.........TE.........VA........vU.........fE.........YA........fV.........rE.........bA........PW.........3E.........eA.........X.........DF.........hA........vX.........PF.........kA........fY.........bF.........nA........PZ.........nF.........qA.........a.........zF.........tA........va..........G.........wA........fb.........LG.........zA........Pc.........XG.........2A.........d.........jG.........5A........vd.........vG.........8A........fe.........7G..........B........Pf.........HH.........CB.........g.........TH.........FB........vg.........fH.........IB........fh.........rH.........LB........Pi.........3H.........OB.........j.........DI.........RB........vj.........PI.........UB........fk.........bI.........XB........Pl.........nI.........aB.........m.....HcCN7fDQESTxDMDQDELYMEckIWYuARRtEMDSn0TzUlbk8FHOUGcOEQ.Oub...fC.........rb.........PEA..LWZ5U1KrUVXx41Kg01a04FcFQ.........TQ...ykldk8BakElbt8xbuUmbiUFSD.........kD...YkMVX48BakElbt8RXs8VctQmQD.........kD...YkMVX48BakElbt8xbuUmbiUFSD.........UD...cu4VYuvVYgImauDVauUmazYDA........PEA..P2atU1KrUVXx41Ky8VcxMVYLQ.........TP...skFduvVYgImauDVauUmazYDA........PAA..zVZ38BakElbt8xbuUmbiUFSD.........EF..PZtAWcz8EakYWYr8BakElbt8RXs8VctQmQD.........EF..PZtAWcz8EakYWYr8BakElbt8xbuUmbiUFSD.........UF..va0QGb0Q2WrUlckw1KrUVXx41Kg01a04FcFQ.........TY...uUGcvUGcewVY1UFauvVYgImauL2a0I2XkwDA........Pk...XWZkc2Wykldk0DB..f.....A....D.......PCQ...WCAUC..vX0Imbk4FceAWXzMFZTc...PVYlEVcrQmDAYmbx.A.RDVcsYFVU4FcoQGakQ1SPvFHK7dPeDER.oUf6RjFhPsO.....A....D...................3O...f+....................9C...3O...................f+....9C...................3O...f+.......H.vF.fB.s.fN.zD.UAPW.HF.mAPd.3WAtUvbETWA2UfdEvWAFVPhEP4Amc.aG31Ayc.e........BD..........Z...................GrN"
 														}
 ,
 														"snapshotlist" : 														{
@@ -3174,7 +3174,7 @@
 																		"version" : 1,
 																		"isbank" : 0,
 																		"isbase64" : 1,
-																		"blob" : "2111.hAGaoMGcv.S1AHv.DTfAGfPBJr.CTTgEWfQFb0VXtUmYgMFc0IWYxQEYgQWXbUFak0VYtQWKtEVak8EDPLzatQmbuwFakIGHSQWXzU1UyUmXzkGbkckckI2bo8laTQWdvUFUtEVak8EDO.kbuMVYyM2axAxTzEFckIQSLI1bOEAArC..............bB....vO.B......A3CSL2L...f.9PlK+A...LfOru4+....D7Cf......PA+.H......b..........H.........PB+........nvO........K7C........C.........z..........N7C.......vC+.........wO........Q.........fD.........LwO........T7C.......PE+........XA.........W..........F+........jwO........Z7C.......vF.........vA.........c.........fG.........7A.........f.........PH.........HB.........i..........I.........TB.........l.........vI.........fB.........o.........fJ.........rB.........r.........PK.........3B.........u..........L.........DC.........x.........vL.........PC.........0.........fM.........bC.........3.........PN.........nC.........6..........O.........zC.........9.........vO..........D.........AA........fP.........LD.........DA........PQ.........XD.........GA.........R.........jD.........JA........vR.........vD.........MA........fS.........7D.........PA........PT.........HE.........SA.........U.........TE.........VA........vU.........fE.........YA........fV.........rE.........bA........PW.........3E.........eA.........X.........DF.........hA........vX.........PF.........kA........fY.........bF.........nA........PZ.........nF.........qA.........a.........zF.........tA........va..........G.........wA........fb.........LG.........zA........Pc.........XG.........2A.........d.........jG.........5A........vd.........vG.........8A........fe.........7G..........B........Pf.........HH.........CB.........g.........TH.........FB........vg.........fH.........IB........fh.........rH.........LB........Pi.........3H.........OB.........j.........DI.........RB........vj.........PI.........UB........fk.........bI.........XB........Pl.........nI.........aB.........m.....HcCN7fDQESTxDMDQDELYMEckIWYuARRtEMDSn0TzUlbk8FHOUGcOEQ.Oub...fC.........rb.........PEA..LWZ5U1KrUVXx41Kg01a04FcFQ.........TQ...ykldk8BakElbt8xbuUmbiUFSD.........kD...YkMVX48BakElbt8RXs8VctQmQD.........kD...YkMVX48BakElbt8xbuUmbiUFSD.........UD...cu4VYuvVYgImauDVauUmazYDA........PEA..P2atU1KrUVXx41Ky8VcxMVYLQ.........TP...skFduvVYgImauDVauUmazYDA........PAA..zVZ38BakElbt8xbuUmbiUFSD.........EF..PZtAWcz8EakYWYr8BakElbt8RXs8VctQmQD.........EF..PZtAWcz8EakYWYr8BakElbt8xbuUmbiUFSD.........UF..va0QGb0Q2WrUlckw1KrUVXx41Kg01a04FcFQ.........TY...uUGcvUGcewVY1UFauvVYgImauL2a0I2XkwDA........Pk...XWZkc2Wykldk0DB..f.....A....D.......PCQ...WCAUC..vX0Imbk4FceAWXzMFZTc...PVYlEVcrQmDAYmbx.A.RDVcsYFVU4FcoQGakQ1SPvF...hPl7tv+LH2mOz+axtO.....A....D...................3O...f+....................9C...3O...................f+....9C...................3O...f+.......H.vF.fB.s.fN.zD.UAPW.HF.mAPd.3WAtUvbETWA2UfdEvWAFVPhEP4Amc.aG31Ayc.e........BD..........Z...................GrN"
+																		"blob" : "2111.hAGaoMGcv.S1AHv.DTfAGfPBJr.CTTgEWfQFb0VXtUmYgMFc0IWYxQEYgQWXbUFak0VYtQWKtEVak8EDPLzatQmbuwFakIGHSQWXzU1UyUmXzkGbkckckI2bo8laTQWdvUFUtEVak8EDO.kbuMVYyM2axAxTzEFckIQSLI1bOEAArC..............bB....vO+viF....A3C17+E...f.+TBbwB...LfOTKhF....D7Cf......PA+.H......b..........H.........PB+........nvO........K7C........C.........z..........N7C.......vC+.........wO........Q.........fD.........LwO........T7C.......PE+........XA.........W..........F+........jwO........Z7C.......vF.........vA.........c.........fG.........7A.........f.........PH.........HB.........i..........I.........TB.........l.........vI.........fB.........o.........fJ.........rB.........r.........PK.........3B.........u..........L.........DC.........x.........vL.........PC.........0.........fM.........bC.........3.........PN.........nC.........6..........O.........zC.........9.........vO..........D.........AA........fP.........LD.........DA........PQ.........XD.........GA.........R.........jD.........JA........vR.........vD.........MA........fS.........7D.........PA........PT.........HE.........SA.........U.........TE.........VA........vU.........fE.........YA........fV.........rE.........bA........PW.........3E.........eA.........X.........DF.........hA........vX.........PF.........kA........fY.........bF.........nA........PZ.........nF.........qA.........a.........zF.........tA........va..........G.........wA........fb.........LG.........zA........Pc.........XG.........2A.........d.........jG.........5A........vd.........vG.........8A........fe.........7G..........B........Pf.........HH.........CB.........g.........TH.........FB........vg.........fH.........IB........fh.........rH.........LB........Pi.........3H.........OB.........j.........DI.........RB........vj.........PI.........UB........fk.........bI.........XB........Pl.........nI.........aB.........m.....HcCN7fDQESTxDMDQDELYMEckIWYuARRtEMDSn0TzUlbk8FHOUGcOEQ.Oub...fC.........rb.........PEA..LWZ5U1KrUVXx41Kg01a04FcFQ.........TQ...ykldk8BakElbt8xbuUmbiUFSD.........kD...YkMVX48BakElbt8RXs8VctQmQD.........kD...YkMVX48BakElbt8xbuUmbiUFSD.........UD...cu4VYuvVYgImauDVauUmazYDA........PEA..P2atU1KrUVXx41Ky8VcxMVYLQ.........TP...skFduvVYgImauDVauUmazYDA........PAA..zVZ38BakElbt8xbuUmbiUFSD.........EF..PZtAWcz8EakYWYr8BakElbt8RXs8VctQmQD.........EF..PZtAWcz8EakYWYr8BakElbt8xbuUmbiUFSD.........UF..va0QGb0Q2WrUlckw1KrUVXx41Kg01a04FcFQ.........TY...uUGcvUGcewVY1UFauvVYgImauL2a0I2XkwDA........Pk...XWZkc2Wykldk0DB..f.....A....D.......PCQ...WCAUC..vX0Imbk4FceAWXzMFZTc...PVYlEVcrQmDAYmbx.A.RDVcsYFVU4FcoQGakQ1SPvFHK7dPeDER.oUf6RjFhPsO.....A....D...................3O...f+....................9C...3O...................f+....9C...................3O...f+.......H.vF.fB.s.fN.zD.UAPW.HF.mAPd.3WAtUvbETWA2UfdEvWAFVPhEP4Amc.aG31Ayc.e........BD..........Z...................GrN"
 																	}
 ,
 																	"fileref" : 																	{
@@ -4030,13 +4030,6 @@
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-51", 0 ],
-													"source" : [ "obj-16", 1 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
 													"destination" : [ "obj-18", 0 ],
 													"source" : [ "obj-17", 0 ]
 												}
@@ -4332,13 +4325,6 @@
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-50", 0 ],
-													"source" : [ "obj-52", 1 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
 													"destination" : [ "obj-17", 0 ],
 													"source" : [ "obj-53", 2 ]
 												}
@@ -4532,8 +4518,8 @@
 														"linecount" : 4,
 														"numoutlets" : 0,
 														"patching_rect" : [ 224.0, 262.0, 150.0, 60.0 ],
-														"numinlets" : 1,
-														"id" : "obj-14"
+														"id" : "obj-14",
+														"numinlets" : 1
 													}
 
 												}
@@ -4542,10 +4528,10 @@
 														"maxclass" : "newobj",
 														"text" : "abs",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 190.5, 139.0, 28.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-11"
+														"outlettype" : [ "" ],
+														"id" : "obj-11",
+														"numinlets" : 1
 													}
 
 												}
@@ -4554,10 +4540,10 @@
 														"maxclass" : "newobj",
 														"text" : "> 0.5",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 190.5, 171.0, 36.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-15"
+														"outlettype" : [ "" ],
+														"id" : "obj-15",
+														"numinlets" : 1
 													}
 
 												}
@@ -4566,10 +4552,10 @@
 														"maxclass" : "newobj",
 														"text" : "delta",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 190.5, 106.0, 35.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-16"
+														"outlettype" : [ "" ],
+														"id" : "obj-16",
+														"numinlets" : 1
 													}
 
 												}
@@ -4578,10 +4564,10 @@
 														"maxclass" : "newobj",
 														"text" : "wrap 0 1",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 110.0, 287.0, 55.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-9"
+														"outlettype" : [ "" ],
+														"id" : "obj-9",
+														"numinlets" : 1
 													}
 
 												}
@@ -4590,10 +4576,10 @@
 														"maxclass" : "newobj",
 														"text" : "+",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 110.0, 246.0, 29.5, 22.0 ],
-														"numinlets" : 2,
-														"id" : "obj-8"
+														"outlettype" : [ "" ],
+														"id" : "obj-8",
+														"numinlets" : 2
 													}
 
 												}
@@ -4602,10 +4588,10 @@
 														"maxclass" : "newobj",
 														"text" : "sah",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 120.5, 215.0, 40.0, 22.0 ],
-														"numinlets" : 3,
-														"id" : "obj-7"
+														"outlettype" : [ "" ],
+														"id" : "obj-7",
+														"numinlets" : 3
 													}
 
 												}
@@ -4614,10 +4600,10 @@
 														"maxclass" : "newobj",
 														"text" : "in 2",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 172.0, 59.0, 28.0, 22.0 ],
-														"numinlets" : 0,
-														"id" : "obj-5"
+														"outlettype" : [ "" ],
+														"id" : "obj-5",
+														"numinlets" : 0
 													}
 
 												}
@@ -4626,10 +4612,10 @@
 														"maxclass" : "newobj",
 														"text" : "in 1",
 														"numoutlets" : 1,
-														"outlettype" : [ "" ],
 														"patching_rect" : [ 110.0, 59.0, 28.0, 22.0 ],
-														"numinlets" : 0,
-														"id" : "obj-17"
+														"outlettype" : [ "" ],
+														"id" : "obj-17",
+														"numinlets" : 0
 													}
 
 												}
@@ -4639,8 +4625,8 @@
 														"text" : "out 1",
 														"numoutlets" : 0,
 														"patching_rect" : [ 110.0, 335.0, 35.0, 22.0 ],
-														"numinlets" : 1,
-														"id" : "obj-18"
+														"id" : "obj-18",
+														"numinlets" : 1
 													}
 
 												}
@@ -4722,7 +4708,7 @@
 									"outlettype" : [ "multichannelsignal" ],
 									"patching_rect" : [ 113.0, 374.0, 149.0, 22.0 ],
 									"text" : "mc.gen~ @title phaseShift",
-									"wrapper_uniquekey" : "u754000586"
+									"wrapper_uniquekey" : "u072005612"
 								}
 
 							}
@@ -5989,7 +5975,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 272.0, 94.0, 100.0, 15.0 ],
+					"patching_rect" : [ 302.0, 92.5, 100.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_enum" : [ "QUARTER", "QUARTER_TUPLET", "EIGHTH", "EIGHT_TUPLET", "SIXTEENTH", "SIXTEENTH_TUPLET", "THIRTYSECOND", "THIRTYSECOND_TUPLET" ],
