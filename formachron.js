@@ -49,7 +49,7 @@ Max.addHandler("note", (n,v) => {
 
         for(var i = 0; i < messages.length; i++){
             Max.outlet( messages[i].channel, messages[i].data );
-            console.log( messages[i] );
+            //console.log( messages[i] );
         }
 	}else{
 		mediator.push( newcell );
