@@ -49,7 +49,6 @@ Max.addHandler("note", (n,v) => {
 
         for(var i = 0; i < messages.length; i++){
             Max.outlet( messages[i].channel, messages[i].data );
-            //console.log( messages[i] );
         }
 	}else{
 		mediator.push( newcell );
@@ -64,6 +63,7 @@ Max.addHandler("control", (cc, val) => {
 /// get voice and index from sequencer and prepare MIDI for hardware display
 Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
 	var r = thegrid.regions[ voiceNumber ];
+    //console.log( "received voice number " + voiceNumber + " grid length " + thegrid.regions.length);
 
 	var previousIndex = sequenceIndex - 1;
 	if (previousIndex === -1 ){
@@ -74,27 +74,15 @@ Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
         return;
     }
 
-    //console.log('call mediator sync');
     var messages = mediator.sync( voiceNumber, sequenceIndex ); 
     for( var i = 0; i < messages.length; i++){
-        //console.log( messages[i] );
         Max.outlet( messages[i].channel, messages[i].data ); 
-        //console.log('lkajsdflkjaklfja');
     }
-
-	
-    /*
-	currentNote  = 	CellToPushNote( r.cells[sequenceIndex].x, r.cells[sequenceIndex].y, 'white' );
-	previousNote = 	CellToPushNote(  r.cells[previousIndex].x, r.cells[previousIndex].y,  colours[voiceNumber] );
-	
-	Max.outlet('midi-output', [144, previousNote[0], previousNote[1] ]);
-	Max.outlet('midi-output', [144, currentNote[0],  currentNote[1]  ]);
-    */
 });
 
 Max.addHandler("mode", m => {
 	mediator.setMode( m );
-	console.log( sync.mode) ;
+    console.log( mediator.mode );
 });
 
 Max.addHandler("remove", i => {
