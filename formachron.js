@@ -32,6 +32,7 @@ var results = initAbletonPush1(); // returns a list of messages to initialize bu
 for ( m of results ){
 	Max.outlet('midi-output', m );
 }
+// =========== end setup
 
 // get midi input 
 Max.addHandler("note", (n,v) => {

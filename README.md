@@ -10,11 +10,13 @@ USE
 Put the device onto a track. When that track is selected the device will take over the pads of the Push controller.
 
 TODO
-  - phase shift a sequence
+  - move regions 
+  - delete a region
   - implement mode switching (sequence, shift, move, select, mute)
   - create a heuristics to apply to note generation
-  - move regions 
   - adjust a note
+  - an event fired for all playing sequences to land on the same downbeat
+  - repeat for x number of times 
   - Think about rests in a sequence 
   - use controlSurface API for connecting to Push instead of MIDI messages
   - write sequences into ableton clips
@@ -30,6 +32,10 @@ SORT OF COMPLETE FEATURES
 BUGS
   - modifying a clip should check for overlap
   - what if a region overlaps multipe regions?
+
+ISSUES / PECULIARITIES
+  - a single note region stays on. should it have a subdivision such that it flashes as well? 
+  - when a region is changed should the change be queued until the next bar?
 
 REFERENCES
 - https://forum.ableton.com/viewtopic.php?f=35&t=222861
