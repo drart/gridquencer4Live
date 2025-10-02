@@ -21,17 +21,24 @@ var output = new OutputManager( thegrid );
 var mode = 0;
 var colours = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet'];
 
+var defaultNotes = [60, 61, 62, 63, 64, 65, 66];
+var deafultSequenceMode = 'loop'; /// notes pattern-loop pattern-beatloop pattern-sequenceloop
+
+
+// TODO use clearEngine intead? 
 /// send startup message to clear grid and sequencer
 for( var i = 0; i < 8; i++) {
 	Max.outlet('setVoice', i );
 	Max.outlet('what');
 }
 
+/*
 var results = initAbletonPush1(); // returns a list of messages to initialize buttons
 
 for ( m of results ){
 	Max.outlet('midi-output', m );
 }
+*/
 // =========== end setup
 
 // get midi input 
@@ -56,39 +63,48 @@ Max.addHandler("note", (n,v) => {
 	}
 });
 
-Max.addHandler("control", (cc, val) => {
-	//var response = inputmanager.control( cc, val );
-    //mediator.input( response );
+
+Max.addHandler("cell", (x, y, v) => {
+	var newcell = input.cellInput(x,y,v);
+	if( newcell === undefined){
+        return; 
+    }
+	if ( newcell === null ){
+		var messages = mediator.input();
+
+        if( messages === undefined ){
+            return;
+        }
+
+        for(var i = 0; i < messages.length; i++){
+            Max.outlet( messages[i].channel, messages[i].data );
+            console.log( messages[i] );
+        }
+	}else{
+		mediator.push( newcell );
+	}
 });
 
 /// get voice and index from sequencer and prepare MIDI for hardware display
 Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
-	var r = thegrid.regions[ voiceNumber ];
-    //console.log( "received voice number " + voiceNumber + " grid length " + thegrid.regions.length);
-
-	var previousIndex = sequenceIndex - 1;
-	if (previousIndex === -1 ){
-		previousIndex = r.cells.length - 1; // todo bodge
-	}
-
-    if ( sequenceIndex >= r.cells.length ){ // todo big bodge
-        return;
-    }
+	var r = thegrid.regions[ voiceNumber ]; // returns the region 
+    console.log( "received voice number " + voiceNumber + " grid length " + thegrid.regions.length);
 
     var messages = mediator.sync( voiceNumber, sequenceIndex ); 
     for( var i = 0; i < messages.length; i++){
         Max.outlet( messages[i].channel, messages[i].data ); 
     }
+
+    var messages = mediator.syncControlSurface( voiceNumber, sequenceIndex );
+    for( var i = 0; i < messages.length; i++){
+        Max.outlet( messages[i].channel, messages[i].data ); 
+    }
+
 });
 
 Max.addHandler("mode", m => {
 	mediator.setMode( m );
     console.log( mediator.mode );
-});
-
-Max.addHandler("remove", i => {
-	Max.outlet('setVoice', i );
-	Max.outlet('what');	
 });
 
 function initAbletonPush1(){
@@ -150,3 +166,21 @@ function CellToPushNote(x, y, colour){
 	
 	return( [note, outputcolour] );
 }
+
+Max.addHandler("remove", i => {
+	Max.outlet('setVoice', i );
+	Max.outlet('what');	
+});
+
+Max.addHandler("clearEngine", i => {
+    console.log('\n Clearning Engine \n' );
+    for( var i = 0; i < 8; i++) {
+        Max.outlet('setVoice', i );
+        Max.outlet('what');	
+    }
+});
+
+
+Max.addHandler("setCurrentNoteData", (n,v,p,m) => {
+    mediator.setCurrentNoteData(n,v,p,m);
+});
