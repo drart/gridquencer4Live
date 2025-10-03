@@ -1,6 +1,3 @@
-const path = require('path');
-const Max = require('max-api');
-
 const Cell = require ( './lib/cell.js');
 const Region = require ('./lib/region.js');
 const Grid = require('./lib/grid.js');
@@ -18,18 +15,17 @@ var input = new InputManager();
 var mediator = new Mediator( thegrid , sequencer);
 var output = new OutputManager( thegrid );
 
-var mode = 0;
 var colours = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet'];
 
 var defaultNotes = [60, 61, 62, 63, 64, 65, 66];
-var deafultSequenceMode = 'loop'; /// notes pattern-loop pattern-beatloop pattern-sequenceloop
+var defaultSequenceMode = 'loop'; /// notes pattern-loop pattern-beatloop pattern-sequenceloop
 
 
 // TODO use clearEngine intead? 
 /// send startup message to clear grid and sequencer
 for( var i = 0; i < 8; i++) {
-	Max.outlet('setVoice', i );
-	Max.outlet('what');
+	outlet(0, 'setVoice', i );
+	outlet(0, 'what');
 }
 
 /*
@@ -42,7 +38,7 @@ for ( m of results ){
 // =========== end setup
 
 // get midi input 
-Max.addHandler("note", (n,v) => {
+function note (n,v){
 
 	var newcell = input.input( n, v ); 
     if( newcell === undefined){
@@ -56,15 +52,15 @@ Max.addHandler("note", (n,v) => {
         }
 
         for(var i = 0; i < messages.length; i++){
-            Max.outlet( messages[i].channel, messages[i].data );
+            outlet(0, messages[i].channel, messages[i].data );
         }
 	}else{
 		mediator.push( newcell );
 	}
-});
+}
 
 
-Max.addHandler("cell", (x, y, v) => {
+function cell(x, y, v){
 	var newcell = input.cellInput(x,y,v);
 	if( newcell === undefined){
         return; 
@@ -77,35 +73,35 @@ Max.addHandler("cell", (x, y, v) => {
         }
 
         for(var i = 0; i < messages.length; i++){
-            Max.outlet( messages[i].channel, messages[i].data );
+            outlet(0, messages[i].channel, messages[i].data );
             console.log( messages[i] );
         }
 	}else{
 		mediator.push( newcell );
 	}
-});
+}
 
 /// get voice and index from sequencer and prepare MIDI for hardware display
-Max.addHandler("syncstep", ( voiceNumber, sequenceIndex ) => {
+function syncstep ( voiceNumber, sequenceIndex ) {
 	var r = thegrid.regions[ voiceNumber ]; // returns the region 
     console.log( "received voice number " + voiceNumber + " grid length " + thegrid.regions.length);
 
     var messages = mediator.sync( voiceNumber, sequenceIndex ); 
     for( var i = 0; i < messages.length; i++){
-        Max.outlet( messages[i].channel, messages[i].data ); 
+        outlet(0, messages[i].channel, messages[i].data ); 
     }
 
     var messages = mediator.syncControlSurface( voiceNumber, sequenceIndex );
     for( var i = 0; i < messages.length; i++){
-        Max.outlet( messages[i].channel, messages[i].data ); 
+        outlet(0, messages[i].channel, messages[i].data ); 
     }
 
-});
+}
 
-Max.addHandler("mode", m => {
+function mode (m){
 	mediator.setMode( m );
     console.log( mediator.mode );
-});
+}
 
 function initAbletonPush1(){
 		var msg = [];
@@ -131,56 +127,16 @@ function initAbletonPush1(){
 		
 		return messages;
 }
-
-
-// todo put this in the mediator
-function CellToPushNote(x, y, colour){
-	var note = y*8 + x + 36; 
-	var outputcolour = 3;
-	switch(colour){
-		case 'white':
-			outputcolour = 3;
-			break;
-		case 'red': 
-			outputcolour = 120;
-			break;
-		case 'orange':
-			outputcolour = 60;
-			break;
-		case 'yellow':
-			outputcolour = 13;
-			break;
-		case 'green':
-			outputcolour = 21;
-			break;
-		case 'cyan':
-			outputcolour = 33;
-		case 'blue':
-			outputcolour = 45;
-			break;
-		case 'indigo':
-			outputcolour = 49;
-		default:
-			break;
-	}
+//Max.addHandler("clearEngine", i => {
 	
-	return( [note, outputcolour] );
+function clearEngine(){
+    console.log('\n Clearing Engine \n' );
+    for( var i = 0; i < 8; i++) {
+        outlet(0, 'setVoice', i );
+        outlet(0, 'what');	
+    }
 }
 
-Max.addHandler("remove", i => {
-	Max.outlet('setVoice', i );
-	Max.outlet('what');	
-});
-
-Max.addHandler("clearEngine", i => {
-    console.log('\n Clearning Engine \n' );
-    for( var i = 0; i < 8; i++) {
-        Max.outlet('setVoice', i );
-        Max.outlet('what');	
-    }
-});
-
-
-Max.addHandler("setCurrentNoteData", (n,v,p,m) => {
+function setCurrentNoteData(n,v,p,m) {
     mediator.setCurrentNoteData(n,v,p,m);
-});
+}
