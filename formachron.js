@@ -16,9 +16,23 @@ var mediator = new Mediator( thegrid , sequencer);
 var output = new OutputManager( thegrid );
 
 var colours = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet'];
+var colourNumbers = [127, 3, 13, 21, 33, 45, 49];
 
 var defaultNotes = [60, 61, 62, 63, 64, 65, 66];
 var defaultSequenceMode = 'loop'; /// notes pattern-loop pattern-beatloop pattern-sequenceloop
+
+// Sequence mode tracking
+var sequenceModes = [
+	"QUARTER",
+	"QUARTER_TUPLET",
+	"EIGHTH",
+	"EIGHTH_TUPLET",
+	"SIXTEENTH",
+	"SIXTEENTH_TUPLET",  // default (button 5)
+	"THIRTYSECOND",
+	"THIRTYSECOND_TUPLET"
+];
+var currentSequenceMode = 5;  // Default to SIXTEENTH_TUPLET
 
 
 // TODO use clearEngine intead? 
@@ -101,6 +115,50 @@ function syncstep ( voiceNumber, sequenceIndex ) {
 function mode (m){
 	mediator.setMode( m );
     console.log( mediator.mode );
+}
+
+function output_channel(channel){
+	console.log("output_channel " + channel + ": " + sequenceModes[channel]);
+
+	// Update current sequence mode
+	currentSequenceMode = channel;
+
+	// Update button LEDs - highlight selected mode
+	updateSequenceModeButtons();
+
+	// TODO: When selectedSequence is implemented:
+	// - Apply this mode to the selected sequence
+	// - Update the sequence's timing/subdivision
+}
+
+function updateSequenceModeButtons(){
+	// Send LED updates for all 8 Scene Launch buttons
+	for(var i = 0; i < 8; i++){
+		var color = (i === currentSequenceMode) ? 10 : 1;  // 10 = selected, 1 = unselected
+		outlet(0, 'scene-button', i, color);
+	}
+}
+
+function device_selected(isSelected){
+	console.log("formachron: device_selected=" + isSelected);
+
+	// When device is selected, redraw all regions
+	if(isSelected === 1){
+		for(var i = 0; i < thegrid.regions.length; i++){
+			// Skip null entries from removed regions
+			if(thegrid.regions[i]){
+				var region = thegrid.regions[i];
+
+				// Draw all cells in this region with its color
+				for(var j = 0; j < region.cells.length; j++){
+					outlet(0, 'control-surface', region.cells[j].x, region.cells[j].y, colourNumbers[i]);
+				}
+			}
+		}
+
+		// Light up Scene Launch buttons to show current sequence mode
+		updateSequenceModeButtons();
+	}
 }
 
 function initAbletonPush1(){
